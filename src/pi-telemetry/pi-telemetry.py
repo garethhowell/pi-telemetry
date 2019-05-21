@@ -19,7 +19,7 @@ class PiTelemetry():
     PiTelemetry -
     """
     def __init__(self, mqtt_broker, mqtt_base_topic):
-        self.log = logging.getlogger(__name__)
+        self.log = logging.getLogger(__name__)
         self.log.debug("PiTelemetry.__init__()")
 
         self.broker = mqtt_broker
@@ -35,3 +35,13 @@ class PiTelemetry():
 
         #Shutdown
         self.log.debug("Shutting down")
+
+logging.basicConfig(level = logging.DEBUG)
+log = logging.getLogger("pi-telemetry")
+log.setLevel(logging.DEBUG)
+log.info("pi-telemetry started")
+mqtt_broker = 'mqtt.agdon.net'
+mqtt_base_topic = 'dev/19c'
+pitelemetry = PiTelemetry(mqtt_broker, mqtt_base_topic)
+log.debug("pitelemetry = " + str(pitelemetry))
+pitelemetry.run()
