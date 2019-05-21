@@ -1,0 +1,7 @@
+# Defaults file
+
+LOGLEVEL=info
+VERBOSE=yes
+MQTT_BROKER=mqtt.agdon.net
+MQTT_BASE_TOPIC=dev/19C
+I2C_BASE_DIR=/sys/bus/w1/devices

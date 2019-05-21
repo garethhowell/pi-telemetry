@@ -1,0 +1,11 @@
+[Unit]
+Description=Raspberry Pi telemetry module
+Documentation=https://www.github.com/garethhowell/pi-telemetry
+
+[Service]
+EnvironmentFile=/etc/default/pi-telemetry
+Restart=no
+ExecStart=/usr/local/bin/pi-telemetry --mqtt_broker ${MQTT_BROKER} --mqtt_base_topic ${MQTT_BASE_TOPIC} --log-level ${LOGLEVEL}
+
+[Install]
+WantedBy=multi-user.target
