@@ -24,6 +24,7 @@ class PiTelemetry():
 
         self.broker = mqtt_broker
         self.base_topic = mqtt_base_topic
+        self.log.debug("broker=%s, base_topic=%s",self.broker,self.base_topic)
 
     def run(self):
         self.log.debug("PiTelemetry.run()")
