@@ -12,17 +12,17 @@ import logging
 
 # Specials
 import RPi.GPIO as GPIO
-import paho.mqtt.publish as publish
+import paho.mqtt.client as mqtt
 
 class PiTelemetry():
     """
-    PiTelemetry - Read the value of the DS18B120 thermometer connected to GPIO 4
-    and send to the chosen mqtt topic
+    PiTelemetry - Class to read the value of the DS18B120 thermometer connected to GPIO 4
+    and send the value in Centigrade to the chosen mqtt topic
     """
 
     # Private functions
     def read_temp_raw(self):
-        f = open(self.device_file, 'r')
+        f = open(self.deviceFile, 'r')
         lines = f.readlines()
         f.close()
         return lines
@@ -34,35 +34,48 @@ class PiTelemetry():
             lines = self.read_temp_raw()
         equals_pos = lines[1].find('t=')
         if equals_pos != -1:
-            temp_string = lines[1][equals_pos+2:]
-            temp_c = float(temp_string) / 1000.0
-            return temp_c
+            tempString = lines[1][equals_pos+2:]
+            tempC = float(tempString) / 1000.0
+            return tempC
 
-    def __init__(self, mqtt_broker, mqtt_base_topic, mqtt_username, mqtt_password):
+    # Define MQTT callback functions
+    def on_connect(client, userData, flags, rc):
+        self.log.debug("%s, connected to broker", client)
+    
+    def on_log(client, obj, level, string):
+        self.log.debug(string)
+
+
+    def __init__(self, clientName, mqttBroker, mqttBaseTopic, mqttUsername, mqttPassword):
         self.log = logging.getLogger(__name__)
         self.log.debug("PiTelemetry.__init__()")
 
-        # Instantiate the local variable
-        self.broker = mqtt_broker
-        self.base_topic = mqtt_base_topic
-        self.log.debug("broker=%s, base_topic=%s",self.broker,self.base_topic)
+        # Instantiate the local variables
+        self.clientName = clientName
+        self.mqttBroker = mqttBroker
+        self.mqttBaseTopic = mqttBaseTopic
+        self.log.debug("clientName = %s, mqttBroker=%s, mqttBaseTopic=%s",self.clientName, self.mqttBroker,self.mqttBaseTopic)
 
         # Make sure we have the right modules installed
         os.system('modprobe w1-gpio')
         os.system('modprobe w1-therm')
 
         # Make sure we access the right thermometer
-        base_dir = '/sys/bus/w1/devices/'
-        device_folder = glob.glob(base_dir + '28*')[0]
-        self.device_file = device_folder + '/w1_slave'
+        baseDir = '/sys/bus/w1/devices/'
+        deviceFolder = glob.glob(baseDir + '28*')[0]
+        self.deviceFile = deviceFolder + '/w1_slave'
 
-        # Set up the MQTT client
-        self.Broker = 'mqtt-host'
-        self.auth = {
-                'username': mqtt_username,
-                'password': mqtt_password
-        }
-
+        # Setup the MQTT client
+        self.client = mqtt.Client(self.clientName) #Create the client object
+        self.client.on_log = self.on_log
+        self.client.on_connect = self.on_connect
+        try:
+            self.client.connect(self.mqttBroker, 1883, 60) #Attempt to connect to the broker
+        except:
+            raise
+        
+        # Define the topic on which to publish
+        self.mqttTopic = self.mqttBaseTopic + "temp"
 
     def run(self):
         self.log.debug("PiTelemetry.run()")
@@ -71,7 +84,13 @@ class PiTelemetry():
 
         #Main Loop
         while True:
-            print(self.read_temp())
+            self.temp = self.read_temp()
+            print(self.temp)
+            try:
+                self.client.publish(self.mqttTopic, self.temp) # Publish
+            except:
+                raise
+
             time.sleep(1)
 
         #Shutdown
@@ -81,10 +100,11 @@ logging.basicConfig(level = logging.DEBUG)
 log = logging.getLogger("pi-telemetry")
 log.setLevel(logging.DEBUG)
 log.info("pi-telemetry started")
-mqtt_broker = 'mqtt.agdon.net'
-mqtt_base_topic = 'dev/19c/shed/temp/'
-mqtt_username = ''
-mqtt_password = ''
-pitelemetry = PiTelemetry(mqtt_broker, mqtt_base_topic, mqtt_username, mqtt_password)
+mqttClient = 'shed'
+mqttBroker = 'mqtt.agdon.net'
+mqttBaseTopic = 'tel/19c/shed/'
+mqttUsername = ''
+mqttPassword = ''
+pitelemetry = PiTelemetry(mqttClient, mqttBroker, mqttBaseTopic, mqttUsername, mqttPassword)
 log.debug("pitelemetry = " + str(pitelemetry))
 pitelemetry.run()
