@@ -10,13 +10,11 @@ from setuptools import setup, find_packages
 from codecs import open
 from os import path
 
-def readme():
-    with open('README.rst') as f:
-        return f.read()
+with open('README.rst') as f:
+    readme = f.read()
 
-def license():
-    with open('LICENSE') as f:
-        return f.read()
+with open('LICENSE') as f:
+    license = f.read()
 
 here = path.abspath(path.dirname(__file__))
 
@@ -28,11 +26,11 @@ setup(
 	name='pi-telemetry',
 	version ='0.0.1',
 	description = 'A Raspberry Pi telemetry module',
-	long_description = readme(),
-	url = 'https://www.github.com/garethhowell/pi-telemetry',
+	long_description = readme,
+	url = 'https://www.github.com/garethhowell/pi-telemetry.git',
 	author = 'Gareth Howell',
 	author_email = 'gareth.howell@gmail.com',
-	license = license(),
+	license = license,
 	classifiers = [
 		# How mature is this project? Common values are
     	#   3 - Alpha
