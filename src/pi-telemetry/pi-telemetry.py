@@ -46,7 +46,7 @@ class PiTelemetry():
         self.log.debug(string)
 
 
-    def __init__(self, clientName, mqttBroker, mqttBaseTopic, mqttUsername, mqttPassword):
+    def __init__(self, clientName, mqttBroker, mqttBaseTopic, mqttUsername, mqttPassword, frequency):
         self.log = logging.getLogger(__name__)
         self.log.debug("PiTelemetry.__init__()")
 
@@ -54,6 +54,7 @@ class PiTelemetry():
         self.clientName = clientName
         self.mqttBroker = mqttBroker
         self.mqttBaseTopic = mqttBaseTopic
+        self.frequency = frequency
         self.log.debug("clientName = %s, mqttBroker=%s, mqttBaseTopic=%s",self.clientName, self.mqttBroker,self.mqttBaseTopic)
 
         # Make sure we have the right modules installed
@@ -91,7 +92,7 @@ class PiTelemetry():
             except:
                 raise
 
-            time.sleep(1)
+            time.sleep(frequency)
 
         #Shutdown
         self.log.debug("Shutting down")
@@ -105,6 +106,7 @@ mqttBroker = 'mqtt.agdon.net'
 mqttBaseTopic = 'tel/19c/shed/'
 mqttUsername = ''
 mqttPassword = ''
-pitelemetry = PiTelemetry(mqttClient, mqttBroker, mqttBaseTopic, mqttUsername, mqttPassword)
+frequency = 60 # seconds between transmissions
+pitelemetry = PiTelemetry(mqttClient, mqttBroker, mqttBaseTopic, mqttUsername, mqttPassword, frequency)
 log.debug("pitelemetry = " + str(pitelemetry))
 pitelemetry.run()
