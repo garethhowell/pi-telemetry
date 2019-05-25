@@ -2,6 +2,8 @@
 
 LOGLEVEL=info
 VERBOSE=yes
+MQTT_CLIENT=shed
 MQTT_BROKER=mqtt.agdon.net
-MQTT_BASE_TOPIC=dev/19C
+MQTT_BASE_TOPIC=tel/19c/shed
 I2C_BASE_DIR=/sys/bus/w1/devices
+UPDATE_INTERVAL=60 # seconds

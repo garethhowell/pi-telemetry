@@ -41,12 +41,12 @@ class PiTelemetry():
     # Define MQTT callback functions
     def on_connect(client, userData, flags, rc):
         self.log.debug("%s, connected to broker", client)
-    
+
     def on_log(client, obj, level, string):
         self.log.debug(string)
 
 
-    def __init__(self, clientName, mqttBroker, mqttBaseTopic, mqttUsername, mqttPassword, frequency):
+    def __init__(self, clientName, mqttBroker, mqttBaseTopic, mqttUsername, mqttPassword, i2c_base_dir, frequency):
         self.log = logging.getLogger(__name__)
         self.log.debug("PiTelemetry.__init__()")
 
@@ -74,7 +74,7 @@ class PiTelemetry():
             self.client.connect(self.mqttBroker, 1883, 60) #Attempt to connect to the broker
         except:
             raise
-        
+
         # Define the topic on which to publish
         self.mqttTopic = self.mqttBaseTopic + "temp"
 
@@ -86,17 +86,18 @@ class PiTelemetry():
         #Main Loop
         while True:
             self.temp = self.read_temp()
-            print(self.temp)
+            self.log.debug("Current temp = %sC", self.temp)
             try:
                 self.client.publish(self.mqttTopic, self.temp) # Publish
             except:
                 raise
-
             time.sleep(frequency)
 
         #Shutdown
         self.log.debug("Shutting down")
 
+# Testing Code
+'''
 logging.basicConfig(level = logging.DEBUG)
 log = logging.getLogger("pi-telemetry")
 log.setLevel(logging.DEBUG)
@@ -110,3 +111,4 @@ frequency = 60 # seconds between transmissions
 pitelemetry = PiTelemetry(mqttClient, mqttBroker, mqttBaseTopic, mqttUsername, mqttPassword, frequency)
 log.debug("pitelemetry = " + str(pitelemetry))
 pitelemetry.run()
+'''

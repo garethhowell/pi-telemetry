@@ -1,0 +1,59 @@
+#! /usr/bin/python -u
+
+from pi-telemetry import PiTelemetry
+import logging
+import argparse
+import os
+import rpI2C as i2c
+
+def main(argv):
+    # parse the command-line
+    parser = argparse.ArgumentParser()
+    parser.add_argument('-client', '--mqtt_client', help='The name of this node', default='test')
+    parser.add_argument('-broker', '--mqtt_broker', help='Address of the MQTT broker to send data to', default='mqtt.agdon.net')
+    parser.add_argument('-base_topic', '--mqtt_base_topic', help='MQTT base topic', default='dev/19c/shed')
+    parser.add_argument('-i', '--i2c_base-dir' help='The location of the temperature sensor in the I2C hierarchy', default='dev/19c/shed')
+    parser.add_argument('-l', '--log-level', help="Log level, 'info' or 'debug'", default='debug', choices=['info', 'debug'])
+    parser.add_argument('-u', '--username', help='Login name for the broker, if needed', default='')
+    parser.add_argument('-p', '--password', help='Authentication password for the MQTT broker, if needed', default='')
+    parser.add_argument('-t', '--update_interval', help='Desired time between updates', default='60')
+    args = parser.parse_args()
+
+    # Initialise logging
+    logging.basicConfig(level = {'info':logging.INFO, 'debug':logging.DEBUG}[args.log_level])
+    log = logging.getLogger("pi-telemetry")
+    log.setLevel({'info':logging.INFO, 'debug':logging.DEBUG}[args.log_level])
+    log.info("pi-telemetry started")
+    log.debug(args)
+
+    # Set args
+    client = args.client
+    mqtt_broker = args.mqtt_broker
+    mqtt_base_topic = args.mqtt_base_topic
+    username = args.username
+    password = args.password
+    i2c_base = args.i2c_base_dir
+    update = args.update_interval
+
+    # Instantiate the PiTelemetry object
+    server = PiTelemetry(client,mqtt_broker, mqtt_base_topic, update)
+    log.debug("server = " + str(server))
+
+    # Off we go
+    server.start()
+
+if __name__ == "__main__":
+    logging.basicConfig(level = logging.DEBUG)
+    log = logging.getLogger("pi-telemetry")
+    log.setLevel(logging.DEBUG)
+    log.info("pi-telemetry started")
+    mqttClient = 'shed'
+    mqttBroker = 'mqtt.agdon.net'
+    mqttBaseTopic = 'tel/19c/shed/'
+    mqttUsername = ''
+    mqttPassword = ''
+    frequency = 60 # seconds between transmissions
+    pitelemetry = PiTelemetry(mqttClient, mqttBroker, mqttBaseTopic, mqttUsername, mqttPassword, i2c_base_dir, frequency)
+    log.debug("pitelemetry = " + str(pitelemetry))
+    pitelemetry.run()
+    main(sys.argv[1:])
