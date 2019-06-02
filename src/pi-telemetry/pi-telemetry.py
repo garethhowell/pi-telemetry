@@ -110,13 +110,27 @@ class PiTelemetry:
         self.log.debug("Shutting down")
 
 # Testing Code
-'''
-logging.basicConfig(level = logging.DEBUG)
-log = logging.getLogger("pi-telemetry")
-log.setLevel(logging.DEBUG)
-log.info("pi-telemetry started")
-config = '~/dev/pi-telemetry/etc/pi-telemetry.yaml'
-pitelemetry = PiTelemetry(config)
-log.debug("pitelemetry = " + str(pitelemetry))
-pitelemetry.run()
-'''
+if not argv or len(argv) != 1
+    print ('pi-telemetry <config file>')
+else
+#args = parser.parse_args()
+    with open(argv[0], 'r') as configFile
+        try:
+            config = yaml.safe_load(configFile)
+        except yaml.YAMLError as exc:
+            print(exc)
+
+
+        # Initialise logging
+        logging.basicConfig(level = {'info':logging.INFO, 'debug':logging.DEBUG}[config['log_level']])
+        log = logging.getLogger("pi-telemetry")
+        log.setLevel({'info':logging.INFO, 'debug':logging.DEBUG}[args.log_level])
+        log.info("pi-telemetry started")
+        log.debug(config)
+
+# Instantiate the PiTelemetry object
+server = PiTelemetry(config)
+log.debug("server = " + str(server))
+
+# Off we go
+server.start()
