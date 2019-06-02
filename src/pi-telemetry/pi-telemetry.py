@@ -14,6 +14,7 @@ import logging, socket, traceback
 import RPi.GPIO as GPIO
 import paho.mqtt.client as mqtt
 from threading import Thread
+import yaml
 
 class PiTelemetry:
     """
@@ -35,11 +36,11 @@ class PiTelemetry:
         self.log.debug("config = %s", config)
         self.mqttClient = config['mqtt_client']
         self.mqttBroker = config['mqtt_broker']
-        self.mqttBaseTopic = config['mqtt_base_topic']
-        self.frequency = config['frequency']
+        self.mqttTopic = config['sources']['internal_temp']['topic']
+        self.updateInterval = config['update_interval']
         self.log.debug("mqttClient = %s, mqttBroker=%s, mqttBaseTopic=%s",self.mqttClient, self.mqttBroker,self.mqttBaseTopic)
 
-        self.w1Device = config.sources.internal_temp.serial
+        self.w1Device = config['sources']['internal_temp']['serial']
         self.log.debug("device = %s", self.w1Device)
 
         # Make sure we have the right modules installed
@@ -49,19 +50,16 @@ class PiTelemetry:
         # Make sure we access the right thermometer
         baseDir = '/sys/bus/w1/devices/'
         #deviceFolder = glob.glob(baseDir + '28*')[0]
-        self.deviceFile = deviceFolder + self.w1Device + '/w1_slave'
+        self.deviceFile = baseDir + self.w1Device + '/w1_slave'
 
         # Setup the MQTT client
         self.client = mqtt.Client(self.mqttClient) #Create the client object
         self.client.on_log = self.on_log
         self.client.on_connect = self.on_connect
         try:
-            self.client.connect(self.mqttBroker, config.mqtt_port, 60) #Attempt to connect to the broker
+            self.client.connect(self.mqttBroker) #, config['mqtt_port'], 60) #Attempt to connect to the broker
         except:
             raise
-
-        # Define the topic on which to publish
-        self.mqttTopic = self.mqttBaseTopic + "temp"
 
     # Private functions
     def read_temp_raw(self):
@@ -104,33 +102,35 @@ class PiTelemetry:
                 self.client.publish(self.mqttTopic, self.temp) # Publish
             except:
                 raise
-            time.sleep(frequency)
+            time.sleep(self.updateInterval)
 
         #Shutdown
         self.log.debug("Shutting down")
 
 # Testing Code
-if not argv or len(argv) != 1
-    print ('pi-telemetry <config file>')
-else
-#args = parser.parse_args()
-    with open(argv[0], 'r') as configFile
-        try:
-            config = yaml.safe_load(configFile)
-        except yaml.YAMLError as exc:
-            print(exc)
 
-
+def main(argv):
+    if not argv or len(argv) != 1:
+        print ('pi-telemetry <config file>')
+    else:
+        with open(argv[0], 'r') as configFile:
+            try:
+                config = yaml.safe_load(configFile)
+            except yaml.YAMLError as exc:
+                print(exc)
         # Initialise logging
         logging.basicConfig(level = {'info':logging.INFO, 'debug':logging.DEBUG}[config['log_level']])
         log = logging.getLogger("pi-telemetry")
-        log.setLevel({'info':logging.INFO, 'debug':logging.DEBUG}[args.log_level])
+        log.setLevel({'info':logging.INFO, 'debug':logging.DEBUG}[config['log_level']])
         log.info("pi-telemetry started")
         log.debug(config)
 
-# Instantiate the PiTelemetry object
-server = PiTelemetry(config)
-log.debug("server = " + str(server))
+        # Instantiate the PiTelemetry object
+        server = PiTelemetry(config)
+        log.debug("server = " + str(server))
 
-# Off we go
-server.start()
+        # Off we go
+        server.run()
+
+if __name__ == "__main__":
+    main(sys.argv[1:])
