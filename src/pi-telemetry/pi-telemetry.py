@@ -8,17 +8,60 @@ to a Raspberry Pi and send via MQTT
 """
 # Standard libraries
 import io, os, sys, glob, time
-import logging
+import logging, socket, traceback
 
 # Specials
 import RPi.GPIO as GPIO
 import paho.mqtt.client as mqtt
+from threading import Thread
 
-class PiTelemetry():
+class PiTelemetry:
     """
     PiTelemetry - Class to read the value of the DS18B120 thermometer connected to GPIO 4
     and send the value in Centigrade to the chosen mqtt topic
     """
+
+    config = None
+    mqttClient = None
+    mqttBroker = None
+    mqttBaseTopic = None
+
+    def __init__(self, config):
+        self.log = logging.getLogger(__name__)
+        self.log.debug("PiTelemetry.__init__()")
+
+        # Instantiate the local variables
+        self.config = config
+        self.log.debug("config = %s", config)
+        self.mqttClient = config['mqtt_client']
+        self.mqttBroker = config['mqtt_broker']
+        self.mqttBaseTopic = config['mqtt_base_topic']
+        self.frequency = config.['frequency']
+        self.log.debug("mqttClient = %s, mqttBroker=%s, mqttBaseTopic=%s",self.mqttClient, self.mqttBroker,self.mqttBaseTopic)
+
+        self.w1Device = config.sources.internal_temp.serial
+        self.log.debug("device = %s", self.w1Device)
+
+        # Make sure we have the right modules installed
+        os.system('modprobe w1-gpio')
+        os.system('modprobe w1-therm')
+
+        # Make sure we access the right thermometer
+        baseDir = '/sys/bus/w1/devices/'
+        #deviceFolder = glob.glob(baseDir + '28*')[0]
+        self.deviceFile = deviceFolder + self.w1Device'/w1_slave'
+
+        # Setup the MQTT client
+        self.client = mqtt.Client(self.mqttClient) #Create the client object
+        self.client.on_log = self.on_log
+        self.client.on_connect = self.on_connect
+        try:
+            self.client.connect(self.mqttBroker, config.mqtt_port, 60) #Attempt to connect to the broker
+        except:
+            raise
+
+        # Define the topic on which to publish
+        self.mqttTopic = self.mqttBaseTopic + "temp"
 
     # Private functions
     def read_temp_raw(self):
@@ -46,37 +89,7 @@ class PiTelemetry():
         self.log.debug(string)
 
 
-    def __init__(self, clientName, mqttBroker, mqttBaseTopic, mqttUsername, mqttPassword, i2c_base_dir, frequency):
-        self.log = logging.getLogger(__name__)
-        self.log.debug("PiTelemetry.__init__()")
 
-        # Instantiate the local variables
-        self.clientName = clientName
-        self.mqttBroker = mqttBroker
-        self.mqttBaseTopic = mqttBaseTopic
-        self.frequency = frequency
-        self.log.debug("clientName = %s, mqttBroker=%s, mqttBaseTopic=%s",self.clientName, self.mqttBroker,self.mqttBaseTopic)
-
-        # Make sure we have the right modules installed
-        os.system('modprobe w1-gpio')
-        os.system('modprobe w1-therm')
-
-        # Make sure we access the right thermometer
-        baseDir = '/sys/bus/w1/devices/'
-        deviceFolder = glob.glob(baseDir + '28*')[0]
-        self.deviceFile = deviceFolder + '/w1_slave'
-
-        # Setup the MQTT client
-        self.client = mqtt.Client(self.clientName) #Create the client object
-        self.client.on_log = self.on_log
-        self.client.on_connect = self.on_connect
-        try:
-            self.client.connect(self.mqttBroker, 1883, 60) #Attempt to connect to the broker
-        except:
-            raise
-
-        # Define the topic on which to publish
-        self.mqttTopic = self.mqttBaseTopic + "temp"
 
     def run(self):
         self.log.debug("PiTelemetry.run()")
@@ -102,13 +115,8 @@ logging.basicConfig(level = logging.DEBUG)
 log = logging.getLogger("pi-telemetry")
 log.setLevel(logging.DEBUG)
 log.info("pi-telemetry started")
-mqttClient = 'shed'
-mqttBroker = 'mqtt.agdon.net'
-mqttBaseTopic = 'tel/19c/shed/'
-mqttUsername = ''
-mqttPassword = ''
-frequency = 60 # seconds between transmissions
-pitelemetry = PiTelemetry(mqttClient, mqttBroker, mqttBaseTopic, mqttUsername, mqttPassword, frequency)
+config = '/etc/pi-telemetry.yaml'
+pitelemetry = PiTelemetry(config)
 log.debug("pitelemetry = " + str(pitelemetry))
 pitelemetry.run()
 '''

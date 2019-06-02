@@ -50,8 +50,9 @@ setup(
         package_dir={"": "src"},
 
 	data_files = [
-		('/etc/default', ['default/pi-telemetry']),
-		('/etc/systemd/system', ['systemd/pi-telemetry.service'])
+	    ('/etc', ['etc/pi-telemetry'])
+        ('/etc/systemd/system', ['etc/systemd/pi-telemetry.service'])
+
 	],
     scripts = [
         'bin/pi-telemetry'
