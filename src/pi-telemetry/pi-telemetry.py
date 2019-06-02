@@ -36,7 +36,7 @@ class PiTelemetry:
         self.mqttClient = config['mqtt_client']
         self.mqttBroker = config['mqtt_broker']
         self.mqttBaseTopic = config['mqtt_base_topic']
-        self.frequency = config.['frequency']
+        self.frequency = config['frequency']
         self.log.debug("mqttClient = %s, mqttBroker=%s, mqttBaseTopic=%s",self.mqttClient, self.mqttBroker,self.mqttBaseTopic)
 
         self.w1Device = config.sources.internal_temp.serial
@@ -49,7 +49,7 @@ class PiTelemetry:
         # Make sure we access the right thermometer
         baseDir = '/sys/bus/w1/devices/'
         #deviceFolder = glob.glob(baseDir + '28*')[0]
-        self.deviceFile = deviceFolder + self.w1Device'/w1_slave'
+        self.deviceFile = deviceFolder + self.w1Device + '/w1_slave'
 
         # Setup the MQTT client
         self.client = mqtt.Client(self.mqttClient) #Create the client object
@@ -115,7 +115,7 @@ logging.basicConfig(level = logging.DEBUG)
 log = logging.getLogger("pi-telemetry")
 log.setLevel(logging.DEBUG)
 log.info("pi-telemetry started")
-config = '/etc/pi-telemetry.yaml'
+config = '~/dev/pi-telemetry/etc/pi-telemetry.yaml'
 pitelemetry = PiTelemetry(config)
 log.debug("pitelemetry = " + str(pitelemetry))
 pitelemetry.run()
