@@ -39,19 +39,17 @@ setup(
 		'Development Status :: 3 - Alpha',
 		'Intended Audience :: Other Audience',
 		'License :: OSI Approved :: GNU General Public License v3 (GPLv3)',
-		'Programming Language :: Python :: 2 :: Only',
-		'Topic :: Other/Nonlisted Topic'
+		'Programming Language :: Python :: 3',
+		'Topic :: Other/Nonlisted Topic',
+                'Operating System :: Raspian'
 	],
 	keywords = 'raspbian python RaspberryPi',
-
-	# You can just specify the packages manually here if your project is
-    # simple. Or you can use find_packages().
-        ipackages=find_packages(where="src", exclude=['contrib', 'docs', 'tests']),
+        packages=find_packages(),
         package_dir={"": "src"},
 
 	data_files = [
-	    ('/etc', ['etc/pi-telemetry'])
-        ('/etc/systemd/system', ['etc/systemd/pi-telemetry.service'])
+	    ('/etc', ['etc/pi-telemetry.yaml']),
+            ('/etc/systemd/system', ['etc/systemd/pi-telemetry.service'])
 
 	],
     scripts = [

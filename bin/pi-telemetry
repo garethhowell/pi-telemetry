@@ -1,6 +1,6 @@
 #! /usr/bin/python3 -u
 
-from pi-telemetry import PiTelemetry
+from "pi-telemetry" import PiTelemetry
 import logging
 import yaml
 import os
