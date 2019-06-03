@@ -1,6 +1,6 @@
 #! /usr/bin/python3 -u
 
-from "pi-telemetry" import PiTelemetry
+from "pitelemetry" import PiTelemetry
 import logging
 import yaml
 import os
@@ -8,7 +8,7 @@ import rpI2C as i2c
 
 def main(argv):
     if not argv or len(argv) != 1
-        print ('pi-telemetry <config file>')
+        print ('pitelemetry <config file>')
     else:
         with open(argv[0], 'r') as configFile:
             try:
@@ -19,9 +19,9 @@ def main(argv):
 
         # Initialise logging
         logging.basicConfig(level = {'info':logging.INFO, 'debug':logging.DEBUG}[config['log_level']])
-        log = logging.getLogger("pi-telemetry")
+        log = logging.getLogger("pitelemetry")
         log.setLevel({'info':logging.INFO, 'debug':logging.DEBUG}[args['log_level']])
-        log.info("pi-telemetry started")
+        log.info("pitelemetry started")
         log.debug(config)
 
         # Instantiate the PiTelemetry object

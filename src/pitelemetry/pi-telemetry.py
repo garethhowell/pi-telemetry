@@ -1,6 +1,6 @@
 #!/usr/bin/python -p
 
-"""pi-telemetry Raspberry Pi telemetry module
+"""pitelemetry Raspberry Pi telemetry module
 
 A systemd compliant daemon to read data from i2c sensors connected
 to a Raspberry Pi and send via MQTT

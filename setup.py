@@ -23,8 +23,8 @@ with open(path.join(here, 'README.rst'), encoding='utf-8') as f:
     long_description = f.read()
 
 setup(
-	name='pi-telemetry',
-	version ='0.0.1',
+	name='pitelemetry',
+	version ='0.0.2',
 	description = 'A Raspberry Pi telemetry module',
 	long_description = readme,
 	url = 'https://www.github.com/garethhowell/pi-telemetry.git',
@@ -41,18 +41,18 @@ setup(
 		'License :: OSI Approved :: GNU General Public License v3 (GPLv3)',
 		'Programming Language :: Python :: 3',
 		'Topic :: Other/Nonlisted Topic',
-                'Operating System :: Raspian'
+        'Operating System :: Raspian'
 	],
 	keywords = 'raspbian python RaspberryPi',
         packages=find_packages(),
         package_dir={"": "src"},
 
 	data_files = [
-	    ('/etc', ['etc/pi-telemetry.yaml']),
-            ('/etc/systemd/system', ['etc/systemd/pi-telemetry.service'])
+	    ('/etc', ['etc/pitelemetry.yaml']),
+            ('/etc/systemd/system', ['etc/systemd/pitelemetry.service'])
 
 	],
     scripts = [
-        'bin/pi-telemetry'
+        'bin/pitelemetry'
     ]
 )
