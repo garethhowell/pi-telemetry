@@ -3,45 +3,33 @@
 from pi-telemetry import PiTelemetry
 import logging
 import yaml
-#import argparse
 import os
 import rpI2C as i2c
 
 def main(argv):
-    # parse the command-line
-    #parser = argparse.ArgumentParser()
-    #parser.add_argument('-client', '--mqtt_client', help='The name of this node', default='test')
-    #parser.add_argument('-broker', '--mqtt_broker', help='Address of the MQTT broker to send data to', default='mqtt.agdon.net')
-    #parser.add_argument('-base_topic', '--mqtt_base_topic', help='MQTT base topic', default='dev/19c/shed')
-    #parser.add_argument('-i', '--i2c_base-dir' help='The location of the temperature sensor in the I2C hierarchy', default='dev/19c/shed')
-    #parser.add_argument('-l', '--log-level', help="Log level, 'info' or 'debug'", default='debug', choices=['info', 'debug'])
-    #parser.add_argument('-u', '--username', help='Login name for the broker, if needed', default='')
-    #parser.add_argument('-p', '--password', help='Authentication password for the MQTT broker, if needed', default='')
-    #parser.add_argument('-t', '--update_interval', help='Desired time between updates', default='60')
     if not argv or len(argv) != 1
         print ('pi-telemetry <config file>')
-    else
-    #args = parser.parse_args()
-        with open(argv[0], 'r') as configFile
+    else:
+        with open(argv[0], 'r') as configFile:
             try:
                 config = yaml.safe_load(configFile)
             except yaml.YAMLError as exc:
                 print(exc)
 
 
-            # Initialise logging
-            logging.basicConfig(level = {'info':logging.INFO, 'debug':logging.DEBUG}[config['log_level']])
-            log = logging.getLogger("pi-telemetry")
-            log.setLevel({'info':logging.INFO, 'debug':logging.DEBUG}[args.log_level])
-            log.info("pi-telemetry started")
-            log.debug(config)
+        # Initialise logging
+        logging.basicConfig(level = {'info':logging.INFO, 'debug':logging.DEBUG}[config['log_level']])
+        log = logging.getLogger("pi-telemetry")
+        log.setLevel({'info':logging.INFO, 'debug':logging.DEBUG}[args['log_level']])
+        log.info("pi-telemetry started")
+        log.debug(config)
 
-    # Instantiate the PiTelemetry object
-    server = PiTelemetry(config)
-    log.debug("server = " + str(server))
+        # Instantiate the PiTelemetry object
+        server = PiTelemetry(config)
+        log.debug("server = " + str(server))
 
-    # Off we go
-    server.start()
+        # Off we go
+        server.start()
 
 if __name__ == "__main__":
     main(sys.argv[1:])

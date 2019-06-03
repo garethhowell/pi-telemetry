@@ -34,10 +34,12 @@ class PiTelemetry:
         # Instantiate the local variables
         self.config = config
         self.log.debug("config = %s", config)
-        self.mqttClient = config['mqtt_client']
-        self.mqttBroker = config['mqtt_broker']
-        self.mqttTopic = config['sources']['internal_temp']['topic']
-        self.updateInterval = config['update_interval']
+        broker = config['broker']
+        self.mqttClient = broker['mqtt_client']
+        self.mqttBroker = broker['mqtt_broker']
+        self.updateInterval = broker['update_interval']
+        sources = config['sources']
+        self.mqttTopic = sources['internal_temp']['topic']
         self.log.debug("mqttClient = %s, mqttBroker=%s, mqttBaseTopic=%s",self.mqttClient, self.mqttBroker,self.mqttBaseTopic)
 
         self.w1Device = config['sources']['internal_temp']['serial']
@@ -106,31 +108,3 @@ class PiTelemetry:
 
         #Shutdown
         self.log.debug("Shutting down")
-
-# Testing Code
-
-def main(argv):
-    if not argv or len(argv) != 1:
-        print ('pi-telemetry <config file>')
-    else:
-        with open(argv[0], 'r') as configFile:
-            try:
-                config = yaml.safe_load(configFile)
-            except yaml.YAMLError as exc:
-                print(exc)
-        # Initialise logging
-        logging.basicConfig(level = {'info':logging.INFO, 'debug':logging.DEBUG}[config['log_level']])
-        log = logging.getLogger("pi-telemetry")
-        log.setLevel({'info':logging.INFO, 'debug':logging.DEBUG}[config['log_level']])
-        log.info("pi-telemetry started")
-        log.debug(config)
-
-        # Instantiate the PiTelemetry object
-        server = PiTelemetry(config)
-        log.debug("server = " + str(server))
-
-        # Off we go
-        server.run()
-
-if __name__ == "__main__":
-    main(sys.argv[1:])
