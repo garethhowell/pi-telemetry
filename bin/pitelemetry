@@ -1,13 +1,13 @@
 #! /usr/bin/python3 -u
 
-from "pitelemetry" import PiTelemetry
+from pitelemetry import PiTelemetry
 import logging
 import yaml
 import os
 import rpI2C as i2c
 
 def main(argv):
-    if not argv or len(argv) != 1
+    if not argv or len(argv) != 1:
         print ('pitelemetry <config file>')
     else:
         with open(argv[0], 'r') as configFile:

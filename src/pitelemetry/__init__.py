@@ -1,1 +1,1 @@
-from .pi-telemetry import PiTelemetry
+from .pitelemetry import PiTelemetry

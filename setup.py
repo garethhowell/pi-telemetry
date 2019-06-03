@@ -45,6 +45,12 @@ setup(
 	],
 	keywords = 'raspbian python RaspberryPi',
         packages=find_packages(),
+        install_requires= [
+            'paho.mqtt.client',
+            'RPi.GPIO',
+            'yaml'
+            ],
+
         package_dir={"": "src"},
 
 	data_files = [
