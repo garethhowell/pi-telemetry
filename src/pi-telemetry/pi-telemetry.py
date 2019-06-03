@@ -23,45 +23,21 @@ class PiTelemetry:
     """
 
     config = None
-    mqttClient = None
-    mqttBroker = None
-    mqttBaseTopic = None
+    log = None
+    updateInterval = None
 
     def __init__(self, config):
         self.log = logging.getLogger(__name__)
         self.log.debug("PiTelemetry.__init__()")
 
-        # Instantiate the local variables
+        # unpack the config
         self.config = config
         self.log.debug("config = %s", config)
-        broker = config['broker']
-        self.mqttClient = broker['mqtt_client']
-        self.mqttBroker = broker['mqtt_broker']
-        self.updateInterval = broker['update_interval']
-        sources = config['sources']
-        self.mqttTopic = sources['internal_temp']['topic']
-        self.log.debug("mqttClient = %s, mqttBroker=%s, mqttBaseTopic=%s",self.mqttClient, self.mqttBroker,self.mqttBaseTopic)
-
-        self.w1Device = config['sources']['internal_temp']['serial']
-        self.log.debug("device = %s", self.w1Device)
 
         # Make sure we have the right modules installed
         os.system('modprobe w1-gpio')
         os.system('modprobe w1-therm')
 
-        # Make sure we access the right thermometer
-        baseDir = '/sys/bus/w1/devices/'
-        #deviceFolder = glob.glob(baseDir + '28*')[0]
-        self.deviceFile = baseDir + self.w1Device + '/w1_slave'
-
-        # Setup the MQTT client
-        self.client = mqtt.Client(self.mqttClient) #Create the client object
-        self.client.on_log = self.on_log
-        self.client.on_connect = self.on_connect
-        try:
-            self.client.connect(self.mqttBroker) #, config['mqtt_port'], 60) #Attempt to connect to the broker
-        except:
-            raise
 
     # Private functions
     def read_temp_raw(self):
@@ -88,20 +64,40 @@ class PiTelemetry:
     def on_log(client, obj, level, string):
         self.log.debug(string)
 
-
-
-
     def run(self):
         self.log.debug("PiTelemetry.run()")
 
         #Setup
+        broker = self.config['broker']
+        mqttClient = broker['mqtt_client']
+        mqttBroker = broker['mqtt_broker']
+        updateInterval = broker['update_interval']
+        sources = config['sources']
+        mqttTopic = sources['internal_temp']['topic']
+        self.log.debug("mqttClient = %s, mqttBroker=%s, mqttBaseTopic=%s",self.mqttClient, self.mqttBroker,self.mqttBaseTopic)
+
+        w1Device = config['sources']['internal_temp']['serial']
+        self.log.debug("device = %s", self.w1Device)
+
+        # Make sure we access the right thermometer
+        baseDir = '/sys/bus/w1/devices/'
+        deviceFile = baseDir + self.w1Device + '/w1_slave'
+
+        # Setup the MQTT client
+        client = mqtt.Client(self.mqttClient) #Create the client object
+        client.on_log = self.on_log
+        client.on_connect = self.on_connect
+        try:
+            client.connect(self.mqttBroker) #, config['mqtt_port'], 60) #Attempt to connect to the broker
+        except:
+            raise
 
         #Main Loop
         while True:
-            self.temp = self.read_temp()
+            temp = self.read_temp()
             self.log.debug("Current temp = %sC", self.temp)
             try:
-                self.client.publish(self.mqttTopic, self.temp) # Publish
+                client.publish(self.mqttTopic, self.temp) # Publish
             except:
                 raise
             time.sleep(self.updateInterval)
