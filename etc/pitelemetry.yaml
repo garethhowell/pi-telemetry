@@ -3,8 +3,8 @@ broker:
   mqtt_broker: mqtt.agdon.net
   mqtt_port: 1833
   update_interval: 60 # seconds
-log_level: DEBUG
+log_level: debug
 sources:
-  external_temp:
+  internal_temp:
     serial: 28-0417c15da2ff
-    topic: tel/19c/ext/temp
+    topic: tel/19c/shed/temp

@@ -1,6 +1,7 @@
-#! /usr/bin/python3 -u
+#!/usr/bin/env python3
 
-import pitelemetry
+import sys
+from pitelemetry import PiTelemetry
 import logging
 import yaml
 import os
@@ -19,7 +20,7 @@ def main(argv):
         # Initialise logging
         logging.basicConfig(level = {'info':logging.INFO, 'debug':logging.DEBUG}[config['log_level']])
         log = logging.getLogger("pitelemetry")
-        log.setLevel({'info':logging.INFO, 'debug':logging.DEBUG}[args['log_level']])
+        log.setLevel({'info':logging.INFO, 'debug':logging.DEBUG}[config['log_level']])
         log.info("pitelemetry started")
         log.debug(config)
 
