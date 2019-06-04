@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """A Raspberry Pi telemetry module
 
-See https://www.github.com/garethhowell/pi-telemetry
+See https://www.github.com/garethhowell/pitelemetry
 """
 # Always prefer setuptools over distutils
 from setuptools import setup, find_packages
@@ -24,10 +24,10 @@ with open(path.join(here, 'README.rst'), encoding='utf-8') as f:
 
 setup(
 	name='pitelemetry',
-	version ='0.0.2',
+	version ='0.0.3',
 	description = 'A Raspberry Pi telemetry module',
 	long_description = readme,
-	url = 'https://www.github.com/garethhowell/pi-telemetry.git',
+	url = 'https://www.github.com/garethhowell/pitelemetry.git',
 	author = 'Gareth Howell',
 	author_email = 'gareth.howell@gmail.com',
 	license = license,
