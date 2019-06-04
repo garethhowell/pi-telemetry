@@ -1,10 +1,9 @@
 #! /usr/bin/python3 -u
 
-from pitelemetry import PiTelemetry
+import pitelemetry
 import logging
 import yaml
 import os
-import rpI2C as i2c
 
 def main(argv):
     if not argv or len(argv) != 1:
