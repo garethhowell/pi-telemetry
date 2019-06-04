@@ -1,11 +1,11 @@
 [Unit]
 Description=Raspberry Pi telemetry module
-Documentation=https://www.github.com/garethhowell/pi-telemetry
+Documentation=https://www.github.com/garethhowell/pitelemetry
 
 [Service]
 EnvironmentFile=/etc/default/pi-telemetry
 Restart=no
-ExecStart=/usr/local/bin/pi-telemetry /etc/pi-telemetry.yaml
+ExecStart=/usr/local/bin/pi-telemetry /etc/pitelemetry.yaml
 
 [Install]
 WantedBy=multi-user.target
