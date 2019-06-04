@@ -5,8 +5,11 @@ from pitelemetry import PiTelemetry
 import logging
 import yaml
 import os
+from threading import Thread
 
 def main(argv):
+    """Run a number of threads, one for each sensor being monitored
+    """
     if not argv or len(argv) != 1:
         print ('pitelemetry <config file>')
     else:
@@ -16,7 +19,6 @@ def main(argv):
             except yaml.YAMLError as exc:
                 print(exc)
 
-
         # Initialise logging
         logging.basicConfig(level = {'info':logging.INFO, 'debug':logging.DEBUG}[config['log_level']])
         log = logging.getLogger("pitelemetry")
@@ -24,12 +26,21 @@ def main(argv):
         log.info("pitelemetry started")
         log.debug(config)
 
-        # Instantiate the PiTelemetry object
-        server = PiTelemetry(config)
-        log.debug("server = " + str(server))
+        # Make sure we have the right modules installed
+        os.system('modprobe w1-gpio')
+        os.system('modprobe w1-therm')
 
-        # Off we go
-        server.start()
+        # Parse the 'sources' tree and instantiate a thread for each
+        sources = config['sources']
+        servers = {}
+        i =0
+        for source in sources:
+            servers[i] = PiTelemetry(config['broker'], source)
+            log.debug("thread = %s")
+            servers[1].start()
+            i += 1
+
+        wait()
 
 if __name__ == "__main__":
     main(sys.argv[1:])

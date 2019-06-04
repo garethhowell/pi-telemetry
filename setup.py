@@ -24,7 +24,7 @@ with open(path.join(here, 'README.rst'), encoding='utf-8') as f:
 
 setup(
 	name='pitelemetry',
-	version ='0.0.3',
+	version ='0.1.0',
 	description = 'A Raspberry Pi telemetry module',
 	long_description = readme,
 	url = 'https://www.github.com/garethhowell/pitelemetry.git',
@@ -39,7 +39,8 @@ setup(
 		'Development Status :: 3 - Alpha',
 		'Intended Audience :: Other Audience',
 		'License :: OSI Approved :: GNU General Public License v3 (GPLv3)',
-		'Programming Language :: Python :: 3',
+		'Programming Language :: Python :: 2.7',
+        'Programming Language :: Python :: 3',
 		'Topic :: Other/Nonlisted Topic',
         'Operating System :: Raspian'
 	],
