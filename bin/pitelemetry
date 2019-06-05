@@ -2,10 +2,11 @@
 
 import sys
 from pitelemetry import PiTelemetry
+from time import sleep
 import logging
 import yaml
 import os
-from threading import Thread
+import threading
 
 def main(argv):
     """Run a number of threads, one for each sensor being monitored
@@ -24,23 +25,39 @@ def main(argv):
         log = logging.getLogger("pitelemetry")
         log.setLevel({'info':logging.INFO, 'debug':logging.DEBUG}[config['log_level']])
         log.info("pitelemetry started")
-        log.debug(config)
+        log.debug("config = %s", config)
 
         # Make sure we have the right modules installed
         os.system('modprobe w1-gpio')
         os.system('modprobe w1-therm')
 
-        # Parse the 'sources' tree and instantiate a thread for each
-        sources = config['sources']
-        servers = {}
+        # Set an event for shutdown
+        shutdown = threading.Event()
+
+        # Parse the config and instantiate a thread for each sensor
+        broker = config['broker']
+        log.debug("broker = %s", broker)
+        sensors = config['sensors']
+        log.debug("sensors = %s", sensors)
+        threads = {}
         i =0
-        for source in sources:
-            servers[i] = PiTelemetry(config['broker'], source)
-            log.debug("thread = %s")
-            servers[1].start()
+        for sensor in sensors:
+            sensor = sensor['sensor']
+            log.debug("sensor = %s", sensor)
+            log.debug("name = %s, device = %s, topic = %s", sensor['name'], sensor['device'], sensor['topic'])
+            threads[i] = PiTelemetry(config['broker'], sensor)
+            threads[i].setName(sensor['name'])
+            threads[i].setDaemon(True)
+            threads[i].start()
+            log.debug("Thread %s created and started",sensor['name'])
             i += 1
 
-        wait()
+        for j in range(0,i-1):
+            threads[j].join()
+
+        while not shutdown.isSet():
+            sleep(1)
+        
 
 if __name__ == "__main__":
     main(sys.argv[1:])

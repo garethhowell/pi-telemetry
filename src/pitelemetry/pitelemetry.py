@@ -16,7 +16,7 @@ import paho.mqtt.client as mqtt
 from threading import Thread
 import yaml
 
-class PiTelemetry(threading.Thread):
+class PiTelemetry(Thread):
     """
     PiTelemetry - Threading Class to read the value of the DS18B120 thermometer connected to GPIO 4
     and send the value in Centigrade to the chosen mqtt topic
@@ -27,16 +27,12 @@ class PiTelemetry(threading.Thread):
     log = None
 
     def __init__(self, broker, source):
-        self.log = logging.getLogger(__name__)
-        self.log.debug("PiTelemetry.__init__()")
+        ''' Constructor. '''
+        Thread.__init__(self)
 
         # unpack the config
         self.broker = broker
-        self.log.debug("broker = %s", broker)
-
         self.source = source
-        self.log.debug("source = %s", source)
-
 
     # Private functions
     def _read_temp_raw(self,device):
@@ -45,7 +41,7 @@ class PiTelemetry(threading.Thread):
         f.close()
         return lines
 
-    def _read_temp(self,device):
+    def _read_device(self,device):
         lines = self._read_temp_raw(device)
         while lines[0].strip()[-3] != 'Y':
             time.sleep(0.2)
@@ -54,38 +50,31 @@ class PiTelemetry(threading.Thread):
         if equals_pos != -1:
             tempString = lines[1][equals_pos+2:]
             tempC = float(tempString) / 1000.0
+            self.log.debug("Current temp = %sC", tempC)
             return tempC
 
-    # Define MQTT callback functions
-    def on_connect(client, userData, flags, rc):
-        self.log.debug("%s, connected to broker", client)
-
-    def on_log(client, obj, level, string):
-        self.log.debug(string)
-
-    def start(self):
+    def run(self):
         """Connect to the broker and start reporting"""
 
-        self.log.debug("PiTelemetry.run()")
+        self.log = logging.getLogger(self.getName())
+        self.log.debug("%s running", self.getName())
 
         #Setup
-        mqttClient = broker['mqtt_client']
-        mqttBroker = broker['mqtt_broker']
+        mqttClient = self.broker['mqtt_client']+'_'+self.name
+        mqttBroker = self.broker['mqtt_broker']
 
-        mqttTopic = source['topic']
+        mqttTopic = self.source['topic']
         self.log.debug("mqttClient = %s, mqttBroker=%s, mqttTopic=%s",mqttClient, mqttBroker,mqttTopic)
 
-        w1Device = source['serial']
+        w1Device = self.source['device']
         self.log.debug("device = %s", w1Device)
 
-        # Make sure we access the right thermometer
+        # Make sure we access the right device
         baseDir = '/sys/bus/w1/devices/'
         device = baseDir + w1Device + '/w1_slave'
 
         # Setup the MQTT client
         client = mqtt.Client(mqttClient) #Create the client object
-        client.on_log = self.on_log
-        client.on_connect = self.on_connect
         try:
             client.connect(mqttBroker) #, config['mqtt_port'], 60) #Attempt to connect to the broker
         except:
@@ -93,13 +82,18 @@ class PiTelemetry(threading.Thread):
 
         #Main Loop
         while True:
-            temp = self.read_temp(device)
-            self.log.debug("Current temp = %sC", temp)
             try:
-                client.publish(mqttTopic, temp) # Publish
+                data = self._read_device(device)
+            except:
+                self.log.error("Trying to access invalid device: %s", device)
+                self.log.debug("Exiting")
+                exit()
+
+            try:
+                client.publish(mqttTopic, data) # Publish
             except:
                 raise
-            time.sleep(broker['updateInterval'])
+            time.sleep(self.broker['update_interval'])
 
         #Shutdown
         self.log.debug("Shutting down")
