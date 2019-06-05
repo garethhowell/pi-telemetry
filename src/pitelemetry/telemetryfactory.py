@@ -7,6 +7,6 @@ class TelemetryFactory():
     def __init__(self):
         self.log = logging.getLogger("TelemetryFactory")
 
-    def create(self, typ, broker, sensor):
-        return globals()[typ](broker, sensor)
+    def create(self, typ, broker, sensor, shutdown):
+        return globals()[typ](broker, sensor, shutdown)
         

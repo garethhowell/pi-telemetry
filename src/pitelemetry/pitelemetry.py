@@ -27,13 +27,14 @@ class PiTelemetry(Thread):
     source = None
     log = None
 
-    def __init__(self, broker, sensor):
+    def __init__(self, broker, sensor, shutdown):
         ''' Constructor. '''
         Thread.__init__(self)
 
         # unpack the config
         self.broker = broker
         self.sensor = sensor
+        self.shutdown = shutdown
 
     # Private functions
 
@@ -68,7 +69,7 @@ class PiTelemetry(Thread):
             raise
 
         #Main Loop
-        while not (signal.shutdown.isSet()):
+        while not (self.shutdown.isSet()):
             try:
                 data = self._read_device(device)
             except:
@@ -81,6 +82,6 @@ class PiTelemetry(Thread):
             except:
                 raise
             time.sleep(self.broker['update_interval'])
-S
+
         #Shutdown
-        self.log.debug("Shutting down")
+        self.log.debug("Sensor shutting down")

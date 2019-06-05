@@ -24,7 +24,7 @@ with open(path.join(here, 'README.rst'), encoding='utf-8') as f:
 
 setup(
 	name='pitelemetry',
-	version ='0.3.0',
+	version ='0.3.1',
 	description = 'A Raspberry Pi telemetry module',
 	long_description = readme,
 	url = 'https://www.github.com/garethhowell/pitelemetry.git',
@@ -49,7 +49,8 @@ setup(
         install_requires= [
             'paho-mqtt',
             'RPi.GPIO',
-            'PyYAML'
+            'PyYAML',
+            'keyboard'
             ],
 
         package_dir={"": "src"},
