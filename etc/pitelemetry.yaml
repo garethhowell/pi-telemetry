@@ -10,13 +10,3 @@ sensors:
     type: temperature
     device: 28-0417c15da2ff
     topic: tel/19c/shed/temp
-  - sensor:
-    name: ext_temp
-    type: temperature
-    device: 28-0417c15da2ff
-    topic: tel/19c/s/temp
-  - sensor:
-    name: dummy
-    type: temperature
-    device: '22'
-    topic: tel/19c/x/temp

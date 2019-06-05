@@ -26,13 +26,13 @@ class PiTelemetry(Thread):
     source = None
     log = None
 
-    def __init__(self, broker, source):
+    def __init__(self, broker, sensor):
         ''' Constructor. '''
         Thread.__init__(self)
 
         # unpack the config
         self.broker = broker
-        self.source = source
+        self.sensor = sensor
 
     # Private functions
 
@@ -49,10 +49,10 @@ class PiTelemetry(Thread):
         mqttClient = self.broker['mqtt_client']+'_'+self.name
         mqttBroker = self.broker['mqtt_broker']
 
-        mqttTopic = self.source['topic']
+        mqttTopic = self.sensor['topic']
         self.log.debug("mqttClient = %s, mqttBroker=%s, mqttTopic=%s",mqttClient, mqttBroker,mqttTopic)
 
-        w1Device = self.source['device']
+        w1Device = self.sensor['device']
         self.log.debug("device = %s", w1Device)
 
         # Make sure we access the right device
@@ -71,7 +71,7 @@ class PiTelemetry(Thread):
             try:
                 data = self._read_device(device)
             except:
-                self.log.error("Sensor %s is Trying to access invalid device: %s", self.source['name'], device)
+                self.log.error("Sensor %s is Trying to access invalid device: %s", self.sensor['name'], device)
                 self.log.debug("Exiting")
                 exit()
 
