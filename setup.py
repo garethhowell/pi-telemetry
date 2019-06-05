@@ -10,11 +10,16 @@ from setuptools import setup, find_packages
 from codecs import open
 from os import path
 
+sys.path.insert(0, 'src')
+from pitelemetry import __version__
+
 with open('README.rst') as f:
     readme = f.read()
 
 with open('LICENSE') as f:
     license = f.read()
+
+requirements = []
 
 here = path.abspath(path.dirname(__file__))
 
@@ -24,7 +29,7 @@ with open(path.join(here, 'README.rst'), encoding='utf-8') as f:
 
 setup(
 	name='pitelemetry',
-	version ='0.3.0',
+	version =__version__,
 	description = 'A Raspberry Pi telemetry module',
 	long_description = readme,
 	url = 'https://www.github.com/garethhowell/pitelemetry.git',
@@ -45,19 +50,14 @@ setup(
         'Operating System :: Raspian'
 	],
 	keywords = 'raspbian python RaspberryPi',
-        packages=find_packages(),
-        install_requires= [
-            'paho-mqtt',
-            'RPi.GPIO',
-            'PyYAML'
-            ],
-
-        package_dir={"": "src"},
-
-	data_files = [
+    packages=find_packages('src'),
+    package_dir={'': 'src'},
+    include_package_data=True,
+    install_requires= requirements,
+    package_dir={"": "src"},
+    data_files = [
 	    ('/etc', ['etc/pitelemetry.yaml']),
-            ('/etc/systemd/system', ['etc/systemd/pitelemetry.service'])
-
+        ('/etc/systemd/system', ['etc/systemd/pitelemetry.service'])
 	],
     scripts = [
         'bin/pitelemetry'
