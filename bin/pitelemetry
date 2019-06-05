@@ -45,10 +45,13 @@ def main(argv):
 
         i =0
         for sensor in sensors:
-            sensor = sensor['sensor']
-            log.debug("sensor = %s", sensor)
+            log.debug("sensor before test = %s", sensor)
+            if not (sensor['sensor'] is None):
+                sensor = sensor['sensor']
+            log.debug("sensor after test = %s", sensor)
             log.debug("name = %s, type = %s, device = %s, topic = %s", sensor['name'], sensor['type'], sensor['device'], sensor['topic'])
-            sensorTypes = {'temperature': 'PiTemerature', 'humidity: PiHumidity'}
+
+            sensorTypes = {'temperature': 'PiTemperature', 'humidity: PiHumidity'}
             sensorType = sensorTypes['sensor['type']']
             log.debug("sensorType = %s", sensorType)
             threads[i] = telemetryObj.create(sensorType)
