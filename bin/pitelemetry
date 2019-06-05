@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 
 import sys
-from pitelemetry import TelemetryFactory
+from pitelemetry import TelemetryFactory, PiTemperature
 from time import sleep
 import logging
 import yaml
@@ -51,10 +51,10 @@ def main(argv):
             log.debug("sensor after test = %s", sensor)
             log.debug("name = %s, type = %s, device = %s, topic = %s", sensor['name'], sensor['type'], sensor['device'], sensor['topic'])
 
-            sensorTypes = {'temperature': 'PiTemperature', 'humidity: PiHumidity'}
-            sensorType = sensorTypes['sensor['type']']
+            sensorTypes = {'temperature': 'PiTemperature', 'humidity': 'PiHumidity'}
+            sensorType = sensorTypes[sensor['type']]
             log.debug("sensorType = %s", sensorType)
-            threads[i] = telemetryObj.create(sensorType)
+            threads[i] = telemetryObj.create(sensorType, broker, sensor)
             threads[i].setName(sensor['name'])
             threads[i].setDaemon(True)
             threads[i].start()

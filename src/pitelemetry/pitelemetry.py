@@ -1,4 +1,4 @@
-#!/usr/bin/python -p
+#!/usr/env python3
 
 """pitelemetry Raspberry Pi telemetry module
 
@@ -37,7 +37,7 @@ class PiTelemetry(Thread):
     # Private functions
 
     def _read_device(self,device):
-        raise NotImplementedError, "_read_device is implemented in the sub-classes"
+        raise NotImplementedError("_read_device is implemented in the sub-classes")
 
     def run(self):
         """Connect to the broker and start reporting"""
@@ -71,7 +71,7 @@ class PiTelemetry(Thread):
             try:
                 data = self._read_device(device)
             except:
-                self.log.error("Trying to access invalid device: %s", device)
+                self.log.error("Sensor %s is Trying to access invalid device: %s", self.source['name'], device)
                 self.log.debug("Exiting")
                 exit()
 

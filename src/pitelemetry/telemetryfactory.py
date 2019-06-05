@@ -1,9 +1,12 @@
+import logging
+from .pitemperature import PiTemperature
+
 class TelemetryFactory():
     """ Factory class to create the appropriate telemetry object"""
 
-    def __init(self):
-        pass
+    def __init__(self):
+        self.log = logging.getLogger("TelemetryFactory")
 
-    def create(self, typ):
-        targetClass = type.capitalize()
-        return globals()[targetClass]
+    def create(self, typ, broker, sensor):
+        return globals()[typ](broker, sensor)
+        

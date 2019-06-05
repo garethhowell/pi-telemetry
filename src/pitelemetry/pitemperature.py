@@ -1,8 +1,8 @@
-#!/usr/bin/python -p
+#!/usr/bin/env python3
 
 """pitelemetry Raspberry Pi telemetry module
 
-A systemd compliant daemon to read data from i2c sensors connected
+A systemd compliant daemon to read data from w1 sensors connected
 to a Raspberry Pi and send via MQTT
 
 """
@@ -15,7 +15,7 @@ import RPi.GPIO as GPIO
 import paho.mqtt.client as mqtt
 from threading import Thread
 import yaml
-from pitelemetry import PiTelemetry
+from .pitelemetry import PiTelemetry
 
 class PiTemperature(PiTelemetry):
     """
