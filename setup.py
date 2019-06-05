@@ -54,7 +54,6 @@ setup(
     package_dir={'': 'src'},
     include_package_data=True,
     install_requires= requirements,
-    package_dir={"": "src"},
     data_files = [
 	    ('/etc', ['etc/pitelemetry.yaml']),
         ('/etc/systemd/system', ['etc/systemd/pitelemetry.service'])
