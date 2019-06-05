@@ -1,21 +1,12 @@
 broker:
-        mqtt_client: dellups
-        mqtt_broker: mqtt.agdon.net
-        mqtt_port: 1833
-        update_interval: 60 # seconds
+  mqtt_client: dellups
+  mqtt_broker: mqtt.agdon.net
+  mqtt_port: 1833
+  update_interval: 60 # seconds
 log_level: debug
 sensors:
-        - sensor:
-                name: shed_temp
-                device: 28-0417c15da2ff
-                topic: tel/19c/shed/temp
-        - sensor:
-                name: ext_temp
-                device: 28-0417c15da2ff
-                topic: tel/19c/s1/temp
-        - sensor:
-                name: dummy_temp
-                device: '22'
-                topic: tel/blah
-
-
+  - sensor:
+    name: shed_temp
+    type: temperature
+    device: 28-0417c15da2ff
+    topic: tel/19c/shed/temp

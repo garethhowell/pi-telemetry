@@ -7,6 +7,7 @@ import logging
 import yaml
 import os
 import threading
+import signal
 
 def main(argv):
     """Run a number of threads, one for each sensor being monitored
@@ -44,8 +45,10 @@ def main(argv):
         for sensor in sensors:
             sensor = sensor['sensor']
             log.debug("sensor = %s", sensor)
-            log.debug("name = %s, device = %s, topic = %s", sensor['name'], sensor['device'], sensor['topic'])
-            threads[i] = PiTelemetry(config['broker'], sensor)
+            log.debug("name = %s, type = %s, device = %s, topic = %s", sensor['name'], sensor['type'], sensor['device'], sensor['topic'])
+            sensorTypes = {temperature: PiTemerature, humidity: PiHumidity}
+            sensorType = sensorTypes['sensor['type']']
+            threads[i] = sensorType(config['broker'], sensor)
             threads[i].setName(sensor['name'])
             threads[i].setDaemon(True)
             threads[i].start()
@@ -57,7 +60,7 @@ def main(argv):
 
         while not shutdown.isSet():
             sleep(1)
-        
+
 
 if __name__ == "__main__":
     main(sys.argv[1:])
