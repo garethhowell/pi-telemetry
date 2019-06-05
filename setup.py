@@ -9,6 +9,7 @@ from setuptools import setup, find_packages
 # To use a consistent encoding
 from codecs import open
 from os import path
+import sys
 
 sys.path.insert(0, 'src')
 from pitelemetry import __version__
