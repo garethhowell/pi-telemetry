@@ -9,11 +9,35 @@ import os
 import threading
 import signal
 
+def sigcatch(signum, frame):
+    """Signal Handler """
+
+    if signum == signal.SIGTERM:
+        log.debug("SIGTERM received, shutting down")
+        shutdown.set()
+
+def getch(self):
+    """ getch - utility function to read a character from the keyboard
+    """
+    ch = ' '
+    fd = sys.stdin.fileno()
+    old_settings = termios.tcgetattr(fd)
+    try:
+        tty.setraw(sys.stdin.fileno())
+        ch = sys.stdin.read(1)
+    finally:
+        termios.tcsetattr(fd, termios.TCSADRAIN, old_settings)
+    return ch
+
 def main(argv):
     """Run a number of threads, one for each sensor being monitored
     """
     if not argv or len(argv) != 1:
-        print ('pitelemetry <config file>')
+        with open('/etc/pitelemetry.yaml', 'r') as configFile:
+            try:
+                config = yaml.safe_load(configFile)
+            except yaml.YAMLError as exc:
+                print(exc)
     else:
         with open(argv[0], 'r') as configFile:
             try:
@@ -34,6 +58,9 @@ def main(argv):
 
         # Set an event for shutdown
         shutdown = threading.Event()
+        shutdown.unset()
+
+        signal.signal(signal.SIGTERM, sigcatch)
 
         # Parse the config and instantiate a thread for each sensor
         broker = config['broker']
@@ -61,12 +88,20 @@ def main(argv):
             log.debug("Thread %s created and started",sensor['name'])
             i += 1
 
-        for j in range(0,i-1):
-            threads[j].join()
-
         while not shutdown.isSet():
+            if sys.stdin.isatty():
+                char = getch()
+                if char == "q":
+                    log.debug("shut down signalled from keyboard")
+                    shutdown.set()
+
             sleep(1)
 
+        # Shutdown
+        log.debug("Shutting down")
+        for j in range(0,i-1):
+            threads[j].join()
+        log.info("Shutdown")
 
 if __name__ == "__main__":
     main(sys.argv[1:])

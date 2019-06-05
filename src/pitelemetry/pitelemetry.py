@@ -15,6 +15,7 @@ import RPi.GPIO as GPIO
 import paho.mqtt.client as mqtt
 from threading import Thread
 import yaml
+import signal
 
 class PiTelemetry(Thread):
     """
@@ -67,7 +68,7 @@ class PiTelemetry(Thread):
             raise
 
         #Main Loop
-        while True:
+        while not (signal.shutdown.isSet()):
             try:
                 data = self._read_device(device)
             except:
@@ -80,6 +81,6 @@ class PiTelemetry(Thread):
             except:
                 raise
             time.sleep(self.broker['update_interval'])
-
+S
         #Shutdown
         self.log.debug("Shutting down")
