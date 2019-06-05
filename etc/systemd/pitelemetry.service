@@ -5,7 +5,7 @@ Documentation=https://www.github.com/garethhowell/pitelemetry
 [Service]
 Type=simple
 Restart=no
-ExecStart=/usr/local/bin/pi-telemetry
+ExecStart=/usr/local/bin/pitelemetry
 
 [Install]
 WantedBy=multi-user.target

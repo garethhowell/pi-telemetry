@@ -8,6 +8,7 @@ import yaml
 import os
 import threading
 import signal
+import keyboard, termios, tty
 
 def sigcatch(signum, frame):
     """Signal Handler """
@@ -16,7 +17,7 @@ def sigcatch(signum, frame):
         log.debug("SIGTERM received, shutting down")
         shutdown.set()
 
-def getch(self):
+def getch():
     """ getch - utility function to read a character from the keyboard
     """
     ch = ' '
@@ -58,7 +59,7 @@ def main(argv):
 
         # Set an event for shutdown
         shutdown = threading.Event()
-        shutdown.unset()
+        shutdown.clear()
 
         signal.signal(signal.SIGTERM, sigcatch)
 
@@ -81,7 +82,7 @@ def main(argv):
             sensorTypes = {'temperature': 'PiTemperature', 'humidity': 'PiHumidity'}
             sensorType = sensorTypes[sensor['type']]
             log.debug("sensorType = %s", sensorType)
-            threads[i] = telemetryObj.create(sensorType, broker, sensor)
+            threads[i] = telemetryObj.create(sensorType, broker, sensor, shutdown)
             threads[i].setName(sensor['name'])
             threads[i].setDaemon(True)
             threads[i].start()
