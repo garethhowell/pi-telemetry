@@ -15,6 +15,7 @@ import RPi.GPIO as GPIO
 import paho.mqtt.client as mqtt
 from threading import Thread
 import yaml
+from pitelemetry import PiTelemetry
 
 class PiTemperature(PiTelemetry):
     """
