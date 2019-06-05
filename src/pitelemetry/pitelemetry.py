@@ -81,6 +81,6 @@ class PiTelemetry(Thread):
             except:
                 raise
             time.sleep(self.broker['update_interval'])
-S
+            
         #Shutdown
         self.log.debug("Shutting down")
