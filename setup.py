@@ -29,7 +29,7 @@ with open(path.join(here, 'README.rst'), encoding='utf-8') as f:
 setup(
 	name='pitelemetry',
 	version =__version__,
-	description = 'A Raspberry Pi telemetry module',
+	description = 'Collect data from 1-wire sensors connected to Raspberry Pi and send via mqtt',
 	long_description = readme,
 	url = 'https://www.github.com/garethhowell/pitelemetry.git',
 	author = 'Gareth Howell',
