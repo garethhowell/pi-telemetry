@@ -55,7 +55,6 @@ class PiTelemetry(Thread):
         self.log.debug("mqttClient = %s, mqttBroker=%s, mqttTopic=%s",mqttClient, mqttBroker,mqttTopic)
 
         w1Device = self.sensor['device']
-        self.log.debug("device = %s", w1Device)
 
         # Make sure we access the right device
         baseDir = '/sys/bus/w1/devices/'
