@@ -62,10 +62,6 @@ class PiTelemetry(Thread):
 
         # Setup the MQTT client
         client = mqtt.Client(mqttClient) #Create the client object
-        try:
-            client.connect(mqttBroker) #, config['mqtt_port'], 60) #Attempt to connect to the broker
-        except:
-            raise
 
         #Main Loop
         while not (self.shutdown.isSet()):
@@ -77,9 +73,15 @@ class PiTelemetry(Thread):
                 exit()
 
             try:
+                client.connect(mqttBroker) #, config['mqtt_port'], 60) #Attempt to connect to the broker
+            except:
+                raise
+
+            try:
                 client.publish(mqttTopic, data) # Publish
             except:
                 raise
+
             time.sleep(self.broker['update_interval'])
 
         #Shutdown
