@@ -1,10 +1,7 @@
 #!/usr/env python3
 
-"""pitelemetry Raspberry Pi telemetry module
-
-A systemd compliant daemon to read data from i2c sensors connected
-to a Raspberry Pi and send via MQTT
-
+"""
+Raspberry Pi telemetry module
 """
 # Standard libraries
 import io, os, sys, glob, time
@@ -17,10 +14,11 @@ from threading import Thread
 import yaml
 import signal
 
+
 class PiTelemetry(Thread):
     """
-    PiTelemetry - Threading Class to read the value of the DS18B120 thermometer connected to GPIO 4
-    and send the value in Centigrade to the chosen mqtt topic
+    Abstract Threading Class containing all but the details for each sensor.
+    Sub-classed by concrete sensor-specific classes.
     """
 
     broker = None
@@ -36,10 +34,12 @@ class PiTelemetry(Thread):
         self.sensor = sensor
         self.shutdown = shutdown
 
+
     # Private functions
 
     def _read_device(self,device):
         raise NotImplementedError("_read_device is implemented in the sub-classes")
+
 
     def run(self):
         """Connect to the broker and start reporting"""
@@ -55,7 +55,6 @@ class PiTelemetry(Thread):
         self.log.debug("mqttClient = %s, mqttBroker=%s, mqttTopic=%s",mqttClient, mqttBroker,mqttTopic)
 
         w1Device = self.sensor['device']
-        self.log.debug("device = %s", w1Device)
 
         # Make sure we access the right device
         baseDir = '/sys/bus/w1/devices/'

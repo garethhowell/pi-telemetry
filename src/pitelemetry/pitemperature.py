@@ -1,11 +1,5 @@
 #!/usr/bin/env python3
 
-"""pitelemetry Raspberry Pi telemetry module
-
-A systemd compliant daemon to read data from w1 sensors connected
-to a Raspberry Pi and send via MQTT
-
-"""
 # Standard libraries
 import io, os, sys, glob, time
 import logging, socket, traceback
@@ -17,10 +11,10 @@ from threading import Thread
 import yaml
 from .pitelemetry import PiTelemetry
 
+
 class PiTemperature(PiTelemetry):
     """
-    PiTelemetry - Threading Class to read the value of the DS18B120 thermometer connected to GPIO 4
-    and send the value in Centigrade to the chosen mqtt topic
+    Concrete class to read data from a DS18B120 sensor
     """
 
     # Private functions
@@ -29,6 +23,7 @@ class PiTemperature(PiTelemetry):
         lines = f.readlines()
         f.close()
         return lines
+
 
     def _read_device(self,device):
         lines = self._read_temp_raw(device)

@@ -9,6 +9,10 @@ from setuptools import setup, find_packages
 # To use a consistent encoding
 from codecs import open
 from os import path
+import sys
+
+sys.path.insert(0, 'src')
+from pitelemetry import __version__
 
 with open('README.rst') as f:
     readme = f.read()
@@ -24,8 +28,8 @@ with open(path.join(here, 'README.rst'), encoding='utf-8') as f:
 
 setup(
 	name='pitelemetry',
-	version ='0.3.1',
-	description = 'A Raspberry Pi telemetry module',
+	version =__version__,
+	description = 'Collect data from 1-wire sensors connected to Raspberry Pi and send via mqtt',
 	long_description = readme,
 	url = 'https://www.github.com/garethhowell/pitelemetry.git',
 	author = 'Gareth Howell',
@@ -45,20 +49,18 @@ setup(
         'Operating System :: Raspian'
 	],
 	keywords = 'raspbian python RaspberryPi',
-        packages=find_packages(),
-        install_requires= [
-            'paho-mqtt',
-            'RPi.GPIO',
-            'PyYAML',
-            'keyboard'
-            ],
-
-        package_dir={"": "src"},
-
-	data_files = [
+    packages=find_packages('src'),
+    package_dir={'': 'src'},
+    include_package_data=True,
+    install_requires= [
+        'paho-mqtt',
+        'RPi.GPIO',
+        'keyboard',
+        'PyYAML'
+        ],
+    data_files = [
 	    ('/etc', ['etc/pitelemetry.yaml']),
-            ('/etc/systemd/system', ['etc/systemd/pitelemetry.service'])
-
+        ('/etc/systemd/system', ['etc/systemd/pitelemetry.service'])
 	],
     scripts = [
         'bin/pitelemetry'

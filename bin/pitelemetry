@@ -10,16 +10,19 @@ import threading
 import signal
 import keyboard, termios, tty
 
+sensorTypes = {'temperature': 'PiTemperature', 'humidity': 'PiHumidity'}
+
 def sigcatch(signum, frame):
     """Signal Handler """
 
     if signum == signal.SIGTERM:
-        log.debug("SIGTERM received, shutting down")
+        log.info("SIGTERM received, shutting down")
         shutdown.set()
 
-def getch():
-    """ getch - utility function to read a character from the keyboard
-    """
+
+def getchar():
+    """ Utility function to read a character from the keyboard """
+
     ch = ' '
     fd = sys.stdin.fileno()
     old_settings = termios.tcgetattr(fd)
@@ -30,9 +33,10 @@ def getch():
         termios.tcsetattr(fd, termios.TCSADRAIN, old_settings)
     return ch
 
+
 def main(argv):
-    """Run a number of threads, one for each sensor being monitored
-    """
+    """Create and run a thread for each sensor being monitored """
+
     if not argv or len(argv) != 1:
         with open('/etc/pitelemetry.yaml', 'r') as configFile:
             try:
@@ -51,7 +55,6 @@ def main(argv):
         log = logging.getLogger("pitelemetry")
         log.setLevel({'info':logging.INFO, 'debug':logging.DEBUG}[config['log_level']])
         log.info("pitelemetry started")
-        log.debug("config = %s", config)
 
         # Make sure we have the right modules installed
         os.system('modprobe w1-gpio')
@@ -65,23 +68,15 @@ def main(argv):
 
         # Parse the config and instantiate a thread for each sensor
         broker = config['broker']
-        log.debug("broker = %s", broker)
         sensors = config['sensors']
-        log.debug("sensors = %s", sensors)
         threads = {}
         telemetryObj = TelemetryFactory()
 
         i =0
         for sensor in sensors:
-            log.debug("sensor before test = %s", sensor)
             if not (sensor['sensor'] is None):
                 sensor = sensor['sensor']
-            log.debug("sensor after test = %s", sensor)
-            log.debug("name = %s, type = %s, device = %s, topic = %s", sensor['name'], sensor['type'], sensor['device'], sensor['topic'])
-
-            sensorTypes = {'temperature': 'PiTemperature', 'humidity': 'PiHumidity'}
             sensorType = sensorTypes[sensor['type']]
-            log.debug("sensorType = %s", sensorType)
             threads[i] = telemetryObj.create(sensorType, broker, sensor, shutdown)
             threads[i].setName(sensor['name'])
             threads[i].setDaemon(True)
@@ -91,7 +86,7 @@ def main(argv):
 
         while not shutdown.isSet():
             if sys.stdin.isatty():
-                char = getch()
+                char = getchar()
                 if char == "q":
                     log.debug("shut down signalled from keyboard")
                     shutdown.set()
