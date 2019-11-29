@@ -45,14 +45,14 @@ class PiTelemetry(Thread):
         """Connect to the broker and start reporting"""
 
         self.log = logging.getLogger(self.getName())
-        self.log.debug("%s running", self.getName())
+        self.log.debug("\r%s is running", self.getName())
 
         #Setup
         mqttClient = self.broker['mqtt_client']+'_'+self.name
         mqttBroker = self.broker['mqtt_broker']
 
         mqttTopic = self.sensor['topic']
-        self.log.debug("mqttClient = %s, mqttBroker=%s, mqttTopic=%s",mqttClient, mqttBroker,mqttTopic)
+        self.log.debug("\rmqttClient = %s, mqttBroker=%s, mqttTopic=%s",mqttClient, mqttBroker,mqttTopic)
 
         w1Device = self.sensor['device']
 
@@ -68,22 +68,24 @@ class PiTelemetry(Thread):
             try:
                 data = self._read_device(device)
             except:
-                self.log.error("Sensor %s is Trying to access invalid device: %s", self.sensor['name'], device)
-                self.log.debug("Exiting")
+                self.log.error("\rSensor %s is Trying to access invalid device: %s", self.sensor['name'], device)
+                self.log.debug("\rExiting")
                 exit()
 
             try:
                 client.connect(mqttBroker) #, config['mqtt_port'], 60) #Attempt to connect to the broker
-                self.log.debug("connected to broker")
+                self.log.debug("\rConnected to broker")
             except:
-                self.log.debug("failed to connect to broker")
+                self.log.debug("\rFailed to connect to broker")
+                self.log.debug("\rExiting")
                 raise
 
             try:
                 client.publish(mqttTopic, data) # Publish
-                self.log.debug("published %s to %s", data, topic)
+                self.log.debug("\rPublished %s to %s", data, mqttTopic)
             except:
-                self.log.debug("failed to publish %s to %s", data, topic)
+                self.log.debug("\rFailed to publish %s to %s", data, mqttTopic)
+                self.log.debug("\rExiting")
                 raise
 
             time.sleep(self.broker['update_interval'])

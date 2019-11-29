@@ -33,6 +33,6 @@ class PiTemperature(PiTelemetry):
         equals_pos = lines[1].find('t=')
         if equals_pos != -1:
             tempString = lines[1][equals_pos+2:]
-            tempC = float(tempString) / 1000.0
-            self.log.debug("Current temp = %sC", tempC)
+            tempC = round((float(tempString) / 1000.0),1)
+            self.log.debug("\rCurrent temp = %sC", tempC)
             return tempC
