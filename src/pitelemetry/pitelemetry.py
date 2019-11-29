@@ -81,9 +81,9 @@ class PiTelemetry(Thread):
 
             try:
                 client.publish(mqttTopic, data) # Publish
-                self.log.debug("published %s to %s", data, topic
+                self.log.debug("published %s to %s", data, topic)
             except:
-                self.log.debug("failed to publish %s to %s", data, topic
+                self.log.debug("failed to publish %s to %s", data, topic)
                 raise
 
             time.sleep(self.broker['update_interval'])
