@@ -74,12 +74,16 @@ class PiTelemetry(Thread):
 
             try:
                 client.connect(mqttBroker) #, config['mqtt_port'], 60) #Attempt to connect to the broker
+                self.log.debug("connected to broker")
             except:
+                self.log.debug("failed to connect to broker")
                 raise
 
             try:
                 client.publish(mqttTopic, data) # Publish
+                self.log.debug("published %s to %s", data, topic
             except:
+                self.log.debug("failed to publish %s to %s", data, topic
                 raise
 
             time.sleep(self.broker['update_interval'])
