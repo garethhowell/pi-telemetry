@@ -37,12 +37,14 @@ def getchar():
 def main(argv):
     """Create and run a thread for each sensor being monitored """
 
+    # Get configuration if none provided
     if not argv or len(argv) != 1:
         with open('/etc/pitelemetry.yaml', 'r') as configFile:
             try:
                 config = yaml.safe_load(configFile)
             except yaml.YAMLError as exc:
                 print(exc)
+                exit(1)
     else:
         with open(argv[0], 'r') as configFile:
             try:
@@ -50,54 +52,55 @@ def main(argv):
             except yaml.YAMLError as exc:
                 print(exc)
 
-        # Initialise logging
-        logging.basicConfig(level = {'info':logging.INFO, 'debug':logging.DEBUG}[config['log_level']])
-        log = logging.getLogger("pitelemetry")
-        log.setLevel({'info':logging.INFO, 'debug':logging.DEBUG}[config['log_level']])
-        log.info("pitelemetry started")
+    # Initialise logging
+    logging.basicConfig(level = {'info':logging.INFO, 'debug':logging.DEBUG}[config['log_level']])
+    log = logging.getLogger(__name__)
+    log.setLevel({'info':logging.INFO, 'debug':logging.DEBUG}[config['log_level']])
+    log.info("pitelemetry started")
 
-        # Make sure we have the right modules installed
-        os.system('modprobe w1-gpio')
-        os.system('modprobe w1-therm')
+    # Make sure we have the right sensor modules installed
+    os.system('modprobe w1-gpio')
+    os.system('modprobe w1-therm')
 
-        # Set an event for shutdown
-        shutdown = threading.Event()
-        shutdown.clear()
+    # Set an event to catch a call to shutdown
+    shutdown = threading.Event()
+    shutdown.clear()
 
-        signal.signal(signal.SIGTERM, sigcatch)
+    #Catch SIGTERM
+    signal.signal(signal.SIGTERM, sigcatch)
 
-        # Parse the config and instantiate a thread for each sensor
-        broker = config['broker']
-        sensors = config['sensors']
-        threads = {}
-        telemetryObj = TelemetryFactory()
+    # Parse the config and instantiate a thread for each sensor
+    broker = config['broker']
+    sensors = config['sensors']
+    threads = {}
+    telemetryObj = TelemetryFactory()
 
-        i =0
-        for sensor in sensors:
-            if not (sensor['sensor'] is None):
-                sensor = sensor['sensor']
-            sensorType = sensorTypes[sensor['type']]
-            threads[i] = telemetryObj.create(sensorType, broker, sensor, shutdown)
-            threads[i].setName(sensor['name'])
-            threads[i].setDaemon(True)
-            threads[i].start()
-            log.debug("Thread %s created and started",sensor['name'])
-            i += 1
+    i =0
+    for sensor in sensors:
+        if not (sensor['sensor'] is None):
+            sensor = sensor['sensor']
+        sensorType = sensorTypes[sensor['type']]
+        threads[i] = telemetryObj.create(sensorType, broker, sensor, shutdown)
+        threads[i].setName(sensor['name'])
+        threads[i].setDaemon(True)
+        threads[i].start()
+        log.debug("Thread %s created and started",sensor['name'])
+        i += 1
 
-        while not shutdown.isSet():
-            if sys.stdin.isatty():
-                char = getchar()
-                if char == "q":
-                    log.debug("shut down signalled from keyboard")
-                    shutdown.set()
+    while not shutdown.isSet():
+        if sys.stdin.isatty():
+            char = getchar()
+            if char == "q":
+                log.debug("shut down signalled from keyboard")
+                shutdown.set()
 
-            sleep(1)
+        sleep(1)
 
-        # Shutdown
-        log.debug("Shutting down")
-        for j in range(0,i-1):
-            threads[j].join()
-        log.info("Shutdown")
+    # Shutdown
+    log.debug("Shutting down")
+    for j in range(0,i-1):
+        threads[j].join()
+    log.info("Shutdown")
 
 if __name__ == "__main__":
     main(sys.argv[1:])

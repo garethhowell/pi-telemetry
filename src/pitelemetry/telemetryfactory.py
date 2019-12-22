@@ -6,7 +6,7 @@ class TelemetryFactory():
 
 
     def __init__(self):
-        self.log = logging.getLogger("\rTelemetryFactory")
+        self.log = logging.getLogger(__name__)
 
 
     def create(self, typ, broker, sensor, shutdown):

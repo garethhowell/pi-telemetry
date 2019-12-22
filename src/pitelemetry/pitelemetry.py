@@ -9,7 +9,7 @@ import logging, socket, traceback
 
 # Specials
 import RPi.GPIO as GPIO
-import paho.mqtt.client as mqtt
+from .mqtt import mqttClient
 from threading import Thread
 import yaml
 import signal
@@ -41,54 +41,65 @@ class PiTelemetry(Thread):
         raise NotImplementedError("_read_device is implemented in the sub-classes")
 
 
+    def connected(client, userdata, flags, rc):
+        """Callback function for when the client receives a CONNACK response from the broker """
+        logger.debug("%s connected with result code %s", client, str(rc))
+        self.connected = True
+
+    def disconnected(client):
+        """Callback function for when client disconnects from broker"""
+        logger.debug("Client disconnected from broker! Exiting")
+        sys.exit(1)
+
+    def message(client, userdata, msg):
+        """Callback function for when the client receives a message from the broker"""
+        self.log.debug("Message received from broker. topic: %s, message: %s", msg.topic, str(msg.payload))
+
     def run(self):
         """Connect to the broker and start reporting"""
 
-        self.log = logging.getLogger(self.getName())
-        self.log.debug("%s is running", self.getName())
+        self.log = logging.getLogger(__name__)
+        self.log.debug("%s is running", __name__)
 
-        #Setup
+        # Setup parameters for connection to broker
         mqttClient = self.broker['mqtt_client']+'_'+self.name
         mqttBroker = self.broker['mqtt_broker']
+        mqttUser = self.broker['mqtt_user']
+        mqttPassword = self.broker['mqtt_password']
 
+        # Setup topic and sensor
         mqttTopic = self.sensor['topic']
         self.log.debug("mqttClient = %s, mqttBroker=%s, mqttTopic=%s",mqttClient, mqttBroker,mqttTopic)
-
         w1Device = self.sensor['device']
 
         # Make sure we access the right device
         baseDir = '/sys/bus/w1/devices/'
         device = baseDir + w1Device + '/w1_slave'
 
-        # Setup the MQTT client
-        client = mqtt.Client(mqttClient) #Create the client object
+        # Setup the MQTT client and callbacks
+        client = MQTTClient(mqttUser, mqttPassword, mqttBroker)
+        client.on_connect = connected
+        client.on_disconnect = disconnected
+        client.on_message = message
 
         #Main Loop
         while not (self.shutdown.isSet()):
-            try:
-                data = self._read_device(device)
-            except:
-                self.log.error("Sensor %s is Trying to access invalid device: %s", self.sensor['name'], device)
-                self.log.debug("Exiting")
-                exit()
+            #Connect to the broker
+            client.connect()
+            #Set the client to loop in the background
+            client.loop_background()
 
-            try:
-                client.connect(mqttBroker) #, config['mqtt_port'], 60) #Attempt to connect to the broker
-                self.log.debug("Connected to broker")
-            except:
-                self.log.debug("Failed to connect to broker")
-                self.log.debug("Exiting")
-                raise
-
-            try:
+            # Start reading device data and publishing to broker
+            while True:
+                try:
+                    data = self._read_device(device)
+                except:
+                    self.log.error("Sensor %s is Trying to access invalid device: %s", self.sensor['name'], device)
+                    self.log.debug("Exiting")
+                    sys.exit(1)
                 client.publish(mqttTopic, data) # Publish
                 self.log.debug("Published %s to %s", data, mqttTopic)
-            except:
-                self.log.debug("Failed to publish %s to %s", data, mqttTopic)
-                self.log.debug("Exiting")
-                raise
-
-            time.sleep(self.broker['update_interval'])
+                time.sleep(self.broker['update_interval'])
 
         #Shutdown
         self.log.debug("Sensor shutting down")
