@@ -280,5 +280,4 @@ class MQTTClient(object):
           self._client.publish('{0}/feeds/{1}.{2}'.format(self._username, group_id, feed_id),
               payload=value)
         else: # regular feed
-          (res, self._pub_mid) = self._client.publish(feed_id),
-              payload=value)
+          (res, self._pub_mid) = self._client.publish(feed_id, payload=value)

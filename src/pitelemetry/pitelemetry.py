@@ -9,7 +9,7 @@ import logging, socket, traceback
 
 # Specials
 import RPi.GPIO as GPIO
-from .mqtt import mqttClient
+from .mqtt import MQTTClient
 from threading import Thread
 import yaml
 import signal
@@ -76,11 +76,13 @@ class PiTelemetry(Thread):
         baseDir = '/sys/bus/w1/devices/'
         device = baseDir + w1Device + '/w1_slave'
 
-        # Setup the MQTT client and callbacks
-        client = MQTTClient(mqttUser, mqttPassword, mqttBroker)
-        client.on_connect = connected
-        client.on_disconnect = disconnected
-        client.on_message = message
+        # Create an MQTT client instance
+        client = MQTTClient(mqttUser, mqttPassword, mqttBroker, False) # Use insecure connection to this internal broker
+        
+        # Setup the callbacks
+        client.on_connect = self.connected
+        client.on_disconnect = self.disconnected
+        client.on_message = self.message
 
         #Main Loop
         while not (self.shutdown.isSet()):
