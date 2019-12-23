@@ -28,7 +28,12 @@ class PiTemperature(PiTelemetry):
 
 
     def _read_device(self,device):
-        lines = self._read_temp_raw(device)
+        try:
+            lines = self._read_temp_raw(device)
+        except Exception as ex:
+            logger.error("Get exception '%s' whilst trying to access %s", ex, device)
+            self.log.debug("Exiting")
+            sys.exit(1)
         while lines[0].strip()[-3] != 'Y':
             time.sleep(0.2)
             lines = self.read_temp_raw()
@@ -45,5 +50,5 @@ class PiTemperature(PiTelemetry):
             }
             payload = json.dumps(data)
             logger.debug("jsonified data = "+payload)
-            
+
             return payload

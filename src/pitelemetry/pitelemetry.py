@@ -78,7 +78,7 @@ class PiTelemetry(Thread):
 
         # Create an MQTT client instance
         client = MQTTClient(mqttUser, mqttPassword, mqttBroker, False) # Use insecure connection to this internal broker
-        
+
         # Setup the callbacks
         client.on_connect = self.connected
         client.on_disconnect = self.disconnected
@@ -93,12 +93,7 @@ class PiTelemetry(Thread):
 
             # Start reading device data and publishing to broker
             while True:
-                try:
-                    data = self._read_device(device)
-                except:
-                    self.log.error("Sensor %s is Trying to access invalid device: %s", self.sensor['name'], device)
-                    self.log.debug("Exiting")
-                    sys.exit(1)
+                data = self._read_device(device)
                 client.publish(mqttTopic, data) # Publish
                 self.log.debug("Published %s to %s", data, mqttTopic)
                 time.sleep(self.broker['update_interval'])
