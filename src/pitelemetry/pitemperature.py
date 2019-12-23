@@ -10,11 +10,13 @@ import paho.mqtt.client as mqtt
 from threading import Thread
 import yaml
 from .pitelemetry import PiTelemetry
+import json
+import datetime
 
 
 class PiTemperature(PiTelemetry):
     """
-    Concrete class to read data from a DS18B120 sensor
+    Concrete class to read data from a DS18B120 sensor and construct json structure
     """
 
     # Private functions
@@ -34,5 +36,14 @@ class PiTemperature(PiTelemetry):
         if equals_pos != -1:
             tempString = lines[1][equals_pos+2:]
             tempC = round((float(tempString) / 1000.0),1)
-            self.log.debug("Current temp = %sC", tempC)
-            return tempC
+            logger.debug("Current temp = %sC", tempC)
+            timestamp = datetime.datetime.now()
+            logger.debug("Current time = "+str(timestamp))
+            data = {
+                "time": timestamp,
+                "temp": tempC
+            }
+            payload = json.dumps(data)
+            logger.debug("jsonified data = "+payload)
+            
+            return payload
