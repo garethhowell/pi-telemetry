@@ -11,6 +11,7 @@ import signal
 import keyboard, termios, tty
 
 sensorTypes = {'temperature': 'PiTemperature', 'humidity': 'PiHumidity'}
+log = ""
 
 def sigcatch(signum, frame):
     """Signal Handler """

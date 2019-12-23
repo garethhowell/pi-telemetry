@@ -16,7 +16,7 @@ import datetime
 
 class PiTemperature(PiTelemetry):
     """
-    Concrete class to read data from a DS18B120 sensor and construct json structure
+    Concrete class to read data from a DS18B120 sensor and return json structure
     """
 
     # Private functions
@@ -28,6 +28,7 @@ class PiTemperature(PiTelemetry):
 
 
     def _read_device(self,device):
+        logger.debug("Entering _read_device")
         lines = self._read_temp_raw(device)
         while lines[0].strip()[-3] != 'Y':
             time.sleep(0.2)
