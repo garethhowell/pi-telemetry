@@ -28,10 +28,11 @@ class PiTemperature(PiTelemetry):
 
 
     def _read_device(self,device):
+        self.log = logging.getLogger(__name__)
         try:
             lines = self._read_temp_raw(device)
         except Exception as ex:
-            logger.error("Get exception '%s' whilst trying to access %s", ex, device)
+            self.log.error("Failed to read data from device", exc_info=True)
             self.log.debug("Exiting")
             sys.exit(1)
         while lines[0].strip()[-3] != 'Y':
@@ -41,14 +42,14 @@ class PiTemperature(PiTelemetry):
         if equals_pos != -1:
             tempString = lines[1][equals_pos+2:]
             tempC = round((float(tempString) / 1000.0),1)
-            logger.debug("Current temp = %sC", tempC)
+            self.log.debug("Current temp = %sC", tempC)
             timestamp = datetime.datetime.now()
-            logger.debug("Current time = "+str(timestamp))
+            self.log.debug("Current time = "+str(timestamp))
             data = {
-                "time": timestamp,
-                "temp": tempC
+                "time": str(timestamp),
+                "temp": str(tempC)
             }
             payload = json.dumps(data)
-            logger.debug("jsonified data = "+payload)
+            self.log.debug("jsonified data = "+payload)
 
             return payload

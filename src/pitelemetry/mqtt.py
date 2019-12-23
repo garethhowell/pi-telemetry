@@ -28,7 +28,6 @@ from .errors import MQTTError, RequestError
 # How long to wait before sending a keep alive (paho-mqtt configuration).
 KEEP_ALIVE_SEC = 60  # One minute
 
-logger = logging.getLogger(__name__)
 
 #forecast_types = ["current", "forecast_minutes_5",
 #                  "forecast_minutes_30", "forecast_hours_1",
@@ -48,6 +47,7 @@ class MQTTClient(object):
             :param service_host: address of broker
             :param secure: (optional, boolean) Switches secure/insecure connections
         """
+        self.logger = logging.getLogger(__name__)
         self._username = username
         self._service_host = service_host
         if secure:
@@ -65,7 +65,7 @@ class MQTTClient(object):
             self._client.tls_set_context()
             self._secure = True
         elif not secure:
-            print('**THIS CONNECTION IS INSECURE** SSL/TLS not supported for this platform')
+            self.logger.info('**THIS CONNECTION IS INSECURE** SSL/TLS not supported for this platform')
             self._secure = False
         self._client.username_pw_set(username, key)
         self._client.on_connect    = self._mqtt_connect
@@ -75,13 +75,13 @@ class MQTTClient(object):
 
 
     def _mqtt_connect(self, client, userdata, flags, rc):
-        logger.debug('Client on_connect called.')
+        self.logger.debug('Client on_connect called.')
         # Check if the result code is success (0) or some error (non-zero) and
         # raise an exception if failed.
         if rc == 0:
             #raise RequestError(rc)
             self._connected = True
-            print('Connected to broker: '+str(self._service_host))
+            self.logger.debug('Connected to broker: '+str(self._service_host))
         else:
             # handle RC errors within MQTTError class
             raise MQTTError(rc)
@@ -90,15 +90,15 @@ class MQTTClient(object):
             self.on_connect(self)
 
     def _mqtt_disconnect(self, client, userdata, rc):
-        logger.debug('Client on_disconnect called.')
+        self.logger.debug('Client on_disconnect called.')
         self._connected = False
         # If this was an unexpected disconnect (non-zero result code) then just
         # log the RC as an error.  Continue on to call any disconnect handler
         # so clients can potentially recover gracefully.
         if rc != 0:
-            print("Unexpected disconnection.")
+            self.logger.debug("Unexpected disconnection.")
             raise MQTTError(rc)
-        print('Disconnected from broker: '+str(self._service_host))
+        self.logger.debug('Disconnected from broker: '+str(self._service_host))
         # Call the on_disconnect callback if available.
         if self.on_disconnect is not None:
             self.on_disconnect(self)
@@ -107,7 +107,7 @@ class MQTTClient(object):
         """Parse out the topic and call on_message callback
         assume topic looks like `username/topic/id`
         """
-        logger.debug('Client on_message called.')
+        self.logger.debug('Client on_message called.')
         # TODO Change this
         parsed_topic = msg.topic.split('/')
         if self.on_message is not None:

@@ -3,7 +3,7 @@
 import sys
 from pitelemetry import TelemetryFactory, PiTemperature
 from time import sleep
-import logging
+import logging, logging.config
 import yaml
 import os
 import threading
@@ -34,6 +34,23 @@ def getchar():
         termios.tcsetattr(fd, termios.TCSADRAIN, old_settings)
     return ch
 
+def setup_logging(
+        default_path='/etc/pitelemetry_logging.yaml',
+        default_level=logging.INFO,
+        env_key='LOG_CFG'
+):
+    """Setup Logging configuration"""
+
+    path = default_path
+    value = os.getenv(env_key, None)
+    if value:
+        path = value
+    if os.path.exists(path):
+        with open(path, 'rt') as f:
+            config = yaml.safe_load(f.read())
+        logging.config.dictConfig(config)
+    else:
+        logging.basicConfig(level=default_level)
 
 def main(argv):
     """Create and run a thread for each sensor being monitored """
@@ -54,9 +71,8 @@ def main(argv):
                 print(exc)
 
     # Initialise logging
-    logging.basicConfig(level = {'info':logging.INFO, 'debug':logging.DEBUG}[config['log_level']])
-    log = logging.getLogger(__name__)
-    log.setLevel({'info':logging.INFO, 'debug':logging.DEBUG}[config['log_level']])
+    setup_logging()
+    log = logging.getLogger("pitelemetry")
     log.info("pitelemetry started")
 
     # Make sure we have the right sensor modules installed
