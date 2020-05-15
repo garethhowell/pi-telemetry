@@ -28,7 +28,8 @@ class PiTelemetry(Thread):
     def __init__(self, broker, sensor, shutdown):
         ''' Constructor. '''
         Thread.__init__(self)
-        self.log=logging.getLogger(__name__)
+        self.log=logging.getLogger("pitelemetry")
+        self.log.debug('pitelemetry __init__')
 
         # unpack the config
         self.broker = broker
@@ -58,8 +59,7 @@ class PiTelemetry(Thread):
 
     def run(self):
         """Connect to the broker and start reporting"""
-
-        self.log = logging.getLogger("pitelemetry")
+        self.log.debug("pitelemetry run")
         self.log.debug("%s is running", __name__)
 
         # Setup parameters for connection to broker

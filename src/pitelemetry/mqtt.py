@@ -47,7 +47,7 @@ class MQTTClient(object):
             :param service_host: address of broker
             :param secure: (optional, boolean) Switches secure/insecure connections
         """
-        self.logger = logging.getLogger(__name__)
+        self.logger = logging.getLogger("pitelemetry")
         self._username = username
         self._service_host = service_host
         if secure:

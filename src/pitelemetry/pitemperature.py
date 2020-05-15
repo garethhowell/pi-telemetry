@@ -28,7 +28,7 @@ class PiTemperature(PiTelemetry):
 
 
     def _read_device(self,device):
-        self.log = logging.getLogger(__name__)
+        self.log.debug("pitemperature _read_device")
         try:
             lines = self._read_temp_raw(device)
         except Exception as ex:
@@ -46,8 +46,10 @@ class PiTemperature(PiTelemetry):
             timestamp = datetime.datetime.now()
             self.log.debug("Current time = "+str(timestamp))
             data = {
-                "time": str(timestamp),
-                "temp": str(tempC)
+                    "sType": 9,
+                    "nValue": 0,
+                    #"sValue": '%i;%i;%i' % ( tempC, 42, 1 )
+                    "sValue": tempC
             }
             payload = json.dumps(data)
             self.log.debug("jsonified data = "+payload)
