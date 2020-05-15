@@ -59,7 +59,7 @@ setup(
         'PyYAML'
         ],
     data_files = [
-	    ('/etc', ['etc/pitelemetry.yaml']),
+	    ('/etc', ['etc/pitelemetry.yaml', 'etc/pitelemetry_logging.yaml']),
         ('/etc/systemd/system', ['etc/systemd/pitelemetry.service'])
 	],
     scripts = [
