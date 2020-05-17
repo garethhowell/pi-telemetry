@@ -43,10 +43,9 @@ setup(
 		'Development Status :: 3 - Alpha',
 		'Intended Audience :: Other Audience',
 		'License :: OSI Approved :: GNU General Public License v3 (GPLv3)',
-		'Programming Language :: Python :: 2.7',
         'Programming Language :: Python :: 3',
 		'Topic :: Other/Nonlisted Topic',
-        'Operating System :: Raspian'
+        'Operating System :: Raspbian'
 	],
 	keywords = 'raspbian python RaspberryPi',
     packages=find_packages('src'),

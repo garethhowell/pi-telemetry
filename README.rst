@@ -39,8 +39,8 @@ INSTALLATION
 Execute the following from a terminal ::
 
  sudo pip3 install pitelemetry
-  sudo systemctl enable /etc/systemd/system/pitelemetry
-  sudo systemctl start pitelemetry.service
+ sudo systemctl enable /etc/systemd/system/pitelemetry
+ sudo systemctl start pitelemetry.service
 
 
 pitelemetry currently supports the following sensors:
