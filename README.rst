@@ -3,6 +3,9 @@ pitelemetry
 
 Collect data from 1-wire sensors connected to Raspberry Pi and send via mqtt
 
+To run from command line ::
+  
+
 The main program, `/usr/local/bin/pitelemetry` is designed to be run by `systemd` as a 'simple' service.
 It takes one argument - the yaml file that contains the configuration.
 The default configuration file is `/etc/pitelemetry.yaml`
