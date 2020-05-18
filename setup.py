@@ -55,7 +55,9 @@ setup(
         'paho-mqtt',
         'RPi.GPIO',
         'keyboard',
-        'PyYAML'
+        'PyYAML',
+        'requests',
+        'json'
         ],
     data_files = [
 	    ('/etc', ['etc/pitelemetry.yaml', 'etc/pitelemetry_logging.yaml']),
