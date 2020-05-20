@@ -3,10 +3,6 @@ pitelemetry
 
 Collect data from 1-wire sensors connected to Raspberry Pi and send via mqtt
 
-To run from command line ::
-  
-
-The main program, `/usr/local/bin/pitelemetry` is designed to be run by `systemd` as a 'simple' service.
 It takes one argument - the yaml file that contains the configuration.
 The default configuration file is `/etc/pitelemetry.yaml`
 
@@ -17,7 +13,6 @@ An example configuration is: ::
     mqtt_broker: mqtt.foo.bar
     mqtt_port: 1833
     update_interval: 60 # seconds
-  log_level: debug
   sensors:
     - sensor:
       name: baz_temp
@@ -29,6 +24,7 @@ An example configuration is: ::
       type: temperature
       device: 28-0417c15cf333
       topic: tel/foo/ext/temp
+ 
 
 RESTRICTIONS
 ============

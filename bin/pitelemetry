@@ -40,56 +40,38 @@ def getchar():
         termios.tcsetattr(fd, termios.TCSADRAIN, old_settings)
     return ch
 
-def setup_logging(
-        default_path='/etc/pitelemetry_logging.yaml',
-        default_level=logging.INFO,
-        env_key='LOG_CFG'
-):
-    """
-    Setup logging based on yaml configuration
-    """
-# TODO Tidy this up so logging configuration can be defined on command line and from a file
-
-    path = default_path
-    value = os.getenv(env_key, None)
-    if value:
-        path = value
-    if os.path.exists(path):
-        with open(path, 'rt') as f:
-            config = yaml.safe_load(f.read())
-        logging.config.dictConfig(config)
-    else:
-        logging.basicConfig(level=default_level)
-
 def main(argv):
-    """Create and run a thread for each sensor being monitored """
+    """ Create and run a thread for each sensor being monitored """
 
     # Set default arguments and overide with command line arguments if provided
     parser = argparse.ArgumentParser()
     parser.add_argument("-c", "--configfile", default="/etc/pitelemetry.yaml",
-                        help="location of YAML configuration file")
-    parser.add_argument("-L", "--logfile", default="./logfile",
-                        help="location of logfile")
+            help="location of YAML configuration file (default: %(default)s")
     parser.add_argument("-l", "--loglevel", default="INFO",
-                        help="define logging level")
+            help="define logging level (default: %(default)s")
+
+    args = parser.parse_args()
+
+    # Initialise logging
+    # Convert parser.loglevel to numeric logging level
+    logging_level = getattr(logging, args.loglevel.upper(), None)
+    if not isinstance(logging_level, int):
+        raise ValueError('Invalid logging level: %s', loglevel)
+
+    # Create Logger object
+    logging.basicConfig(level=logging_level)
+
+    # Open this module's logger
+    log = logging.getLogger(__name__)
+    log.info("pitelemetry started")
 
     # Get telemetry configuration if none provided
-    with open(parser.configfile, 'r') as configFile:
+    with open(args.configfile, 'r') as configFile:
         try:
             config =yaml.safe_load(configFile)
         except yaml.YAMLError as exc:
             print(exc)
             exit(1)
-
-    # Initialise logging
-    # Convert parser.loglevel to numeric logging level
-    logging_level = getattr(logging, parser.loglevel.upper(), None)
-    if not isinstance(numeric_level, int):
-        raise ValueError('Invalid logging level: %s', loglevel)
-    logging.basicConfig(filename=parser.logfile, level=logging_level)
-
-    log = logging.getLogger("pitelemetry")
-    log.info("pitelemetry started")
 
     # Make sure we have the right sensor modules installed
     os.system('modprobe w1-gpio')

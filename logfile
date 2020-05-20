@@ -1,0 +1,376 @@
+INFO:pitelemetry:pitelemetry started
+DEBUG:pitelemetry:telemetryFactory __init__
+DEBUG:pitelemetry:telemetryFactory create
+DEBUG:pitelemetry:pitelemetry __init__
+DEBUG:pitelemetry:pitelemetry run
+DEBUG:pitelemetry:Thread shed_temp created and started
+DEBUG:pitelemetry:pitelemetry.pitelemetry is running
+DEBUG:pitelemetry:mqttClient = dellups_shed_temp, mqttBroker=mqtt.agdon.net, mqttTopic=tel/19c/shed/temp
+INFO:pitelemetry:**THIS CONNECTION IS INSECURE** SSL/TLS not supported for this platform
+DEBUG:pitelemetry:pitemperature _read_device
+DEBUG:pitelemetry:Current temp = 15.6C
+DEBUG:pitelemetry:Current time = 2020-05-18 10:24:07.593454
+DEBUG:pitelemetry:jsonified data = {"sType": 9, "nValue": 0, "sValue": 15.6}
+DEBUG:pitelemetry:Published {"sType": 9, "nValue": 0, "sValue": 15.6} to tel/19c/shed/temp
+DEBUG:pitelemetry:Client on_connect called.
+DEBUG:pitelemetry:Connected to broker: mqtt.agdon.net
+DEBUG:pitelemetry:pitemperature _read_device
+DEBUG:pitelemetry:Current temp = 15.6C
+DEBUG:pitelemetry:Current time = 2020-05-18 10:24:18.469733
+DEBUG:pitelemetry:jsonified data = {"sType": 9, "nValue": 0, "sValue": 15.6}
+DEBUG:pitelemetry:Published {"sType": 9, "nValue": 0, "sValue": 15.6} to tel/19c/shed/temp
+DEBUG:pitelemetry:pitemperature _read_device
+DEBUG:pitelemetry:Current temp = 15.6C
+DEBUG:pitelemetry:Current time = 2020-05-18 10:24:29.349617
+DEBUG:pitelemetry:jsonified data = {"sType": 9, "nValue": 0, "sValue": 15.6}
+DEBUG:pitelemetry:Published {"sType": 9, "nValue": 0, "sValue": 15.6} to tel/19c/shed/temp
+DEBUG:pitelemetry:pitemperature _read_device
+DEBUG:pitelemetry:Current temp = 15.6C
+DEBUG:pitelemetry:Current time = 2020-05-18 10:24:40.229583
+DEBUG:pitelemetry:jsonified data = {"sType": 9, "nValue": 0, "sValue": 15.6}
+DEBUG:pitelemetry:Published {"sType": 9, "nValue": 0, "sValue": 15.6} to tel/19c/shed/temp
+INFO:pitelemetry:pitelemetry started
+DEBUG:pitelemetry:telemetryFactory __init__
+DEBUG:pitelemetry:telemetryFactory create
+DEBUG:pitelemetry:pitelemetry __init__
+DEBUG:pitelemetry:pitelemetry run
+DEBUG:pitelemetry:Thread shed_temp created and started
+DEBUG:pitelemetry:pitelemetry.pitelemetry is running
+DEBUG:pitelemetry:mqttClient = dellups_shed_temp, mqttBroker=mqtt.agdon.net, mqttTopic=tel/19c/shed/temp
+INFO:pitelemetry:**THIS CONNECTION IS INSECURE** SSL/TLS not supported for this platform
+DEBUG:pitelemetry:pitemperature _read_device
+DEBUG:pitelemetry:Current temp = 16.1C
+DEBUG:pitelemetry:Current time = 2020-05-18 11:07:44.238747
+DEBUG:pitelemetry:jsonified data = {"sType": 9, "nValue": 0, "sValue": 16.1}
+DEBUG:pitelemetry:Published {"sType": 9, "nValue": 0, "sValue": 16.1} to tel/19c/shed/temp
+DEBUG:pitelemetry:Client on_connect called.
+DEBUG:pitelemetry:Connected to broker: mqtt.agdon.net
+DEBUG:pitelemetry:pitemperature _read_device
+DEBUG:pitelemetry:Current temp = 16.1C
+DEBUG:pitelemetry:Current time = 2020-05-18 11:07:55.116997
+DEBUG:pitelemetry:jsonified data = {"sType": 9, "nValue": 0, "sValue": 16.1}
+DEBUG:pitelemetry:Published {"sType": 9, "nValue": 0, "sValue": 16.1} to tel/19c/shed/temp
+INFO:pitelemetry:pitelemetry started
+DEBUG:pitelemetry:telemetryFactory __init__
+DEBUG:pitelemetry:telemetryFactory create
+DEBUG:pitelemetry:pitelemetry __init__
+DEBUG:pitelemetry:pitelemetry run
+DEBUG:pitelemetry:Thread shed_temp created and started
+DEBUG:pitelemetry:pitelemetry.pitelemetry is running
+DEBUG:pitelemetry:mqttClient = dellups_shed_temp, mqttBroker=mqtt.agdon.net, mqttTopic=tel/19c/shed/temp
+INFO:pitelemetry:**THIS CONNECTION IS INSECURE** SSL/TLS not supported for this platform
+DEBUG:pitelemetry:pitemperature _read_device
+DEBUG:pitelemetry:Current temp = 17.1C
+DEBUG:pitelemetry:Current time = 2020-05-18 12:39:26.299990
+DEBUG:pitelemetry:jsonified data = {"nValue": 0, "sType": 9, "sValue": 17.1}
+DEBUG:pitelemetry:Published {"nValue": 0, "sType": 9, "sValue": 17.1} to tel/19c/shed/temp
+DEBUG:pitelemetry:Client on_connect called.
+DEBUG:pitelemetry:Connected to broker: mqtt.agdon.net
+DEBUG:pitelemetry:pitemperature _read_device
+DEBUG:pitelemetry:Current temp = 17.1C
+DEBUG:pitelemetry:Current time = 2020-05-18 12:39:37.177899
+DEBUG:pitelemetry:jsonified data = {"nValue": 0, "sType": 9, "sValue": 17.1}
+DEBUG:pitelemetry:Published {"nValue": 0, "sType": 9, "sValue": 17.1} to tel/19c/shed/temp
+DEBUG:pitelemetry:pitemperature _read_device
+DEBUG:pitelemetry:Current temp = 17.1C
+DEBUG:pitelemetry:Current time = 2020-05-18 12:39:48.057916
+DEBUG:pitelemetry:jsonified data = {"nValue": 0, "sType": 9, "sValue": 17.1}
+DEBUG:pitelemetry:Published {"nValue": 0, "sType": 9, "sValue": 17.1} to tel/19c/shed/temp
+DEBUG:pitelemetry:pitemperature _read_device
+DEBUG:pitelemetry:Current temp = 17.1C
+DEBUG:pitelemetry:Current time = 2020-05-18 12:39:58.937967
+DEBUG:pitelemetry:jsonified data = {"nValue": 0, "sType": 9, "sValue": 17.1}
+DEBUG:pitelemetry:Published {"nValue": 0, "sType": 9, "sValue": 17.1} to tel/19c/shed/temp
+DEBUG:pitelemetry:pitemperature _read_device
+DEBUG:pitelemetry:Current temp = 17.1C
+DEBUG:pitelemetry:Current time = 2020-05-18 12:40:09.817919
+DEBUG:pitelemetry:jsonified data = {"nValue": 0, "sType": 9, "sValue": 17.1}
+DEBUG:pitelemetry:Published {"nValue": 0, "sType": 9, "sValue": 17.1} to tel/19c/shed/temp
+DEBUG:pitelemetry:pitemperature _read_device
+DEBUG:pitelemetry:Current temp = 17.1C
+DEBUG:pitelemetry:Current time = 2020-05-18 12:40:20.697901
+DEBUG:pitelemetry:jsonified data = {"nValue": 0, "sType": 9, "sValue": 17.1}
+DEBUG:pitelemetry:Published {"nValue": 0, "sType": 9, "sValue": 17.1} to tel/19c/shed/temp
+DEBUG:pitelemetry:pitemperature _read_device
+DEBUG:pitelemetry:Current temp = 17.1C
+DEBUG:pitelemetry:Current time = 2020-05-18 12:40:31.577919
+DEBUG:pitelemetry:jsonified data = {"nValue": 0, "sType": 9, "sValue": 17.1}
+DEBUG:pitelemetry:Published {"nValue": 0, "sType": 9, "sValue": 17.1} to tel/19c/shed/temp
+INFO:pitelemetry:pitelemetry started
+DEBUG:pitelemetry:telemetryFactory __init__
+DEBUG:pitelemetry:telemetryFactory create
+DEBUG:pitelemetry:pitelemetry __init__
+DEBUG:pitelemetry:pitelemetry run
+DEBUG:pitelemetry:Thread shed_temp created and started
+DEBUG:pitelemetry:pitelemetry.pitelemetry is running
+DEBUG:pitelemetry:mqttClient = dellups_shed_temp, mqttBroker=mqtt.agdon.net, mqttTopic=tel/19c/shed/temp
+INFO:pitelemetry:**THIS CONNECTION IS INSECURE** SSL/TLS not supported for this platform
+DEBUG:pitelemetry:pitemperature _read_device
+DEBUG:pitelemetry:Current temp = 17.1C
+DEBUG:pitelemetry:Current time = 2020-05-18 12:44:52.939911
+DEBUG:pitelemetry:jsonified data = {"nValue": 0, "sValue": 17.1, "sType": 9}
+DEBUG:pitelemetry:Published {"nValue": 0, "sValue": 17.1, "sType": 9} to tel/19c/shed/temp
+DEBUG:pitelemetry:Client on_connect called.
+DEBUG:pitelemetry:Connected to broker: mqtt.agdon.net
+DEBUG:pitelemetry:pitemperature _read_device
+DEBUG:pitelemetry:Current temp = 17.1C
+DEBUG:pitelemetry:Current time = 2020-05-18 12:45:03.817862
+DEBUG:pitelemetry:jsonified data = {"nValue": 0, "sValue": 17.1, "sType": 9}
+DEBUG:pitelemetry:Published {"nValue": 0, "sValue": 17.1, "sType": 9} to tel/19c/shed/temp
+DEBUG:pitelemetry:pitemperature _read_device
+DEBUG:pitelemetry:Current temp = 17.1C
+DEBUG:pitelemetry:Current time = 2020-05-18 12:45:14.697525
+DEBUG:pitelemetry:jsonified data = {"nValue": 0, "sValue": 17.1, "sType": 9}
+DEBUG:pitelemetry:Published {"nValue": 0, "sValue": 17.1, "sType": 9} to tel/19c/shed/temp
+DEBUG:pitelemetry:pitemperature _read_device
+DEBUG:pitelemetry:Current temp = 17.1C
+DEBUG:pitelemetry:Current time = 2020-05-18 12:45:25.578185
+DEBUG:pitelemetry:jsonified data = {"nValue": 0, "sValue": 17.1, "sType": 9}
+DEBUG:pitelemetry:Published {"nValue": 0, "sValue": 17.1, "sType": 9} to tel/19c/shed/temp
+DEBUG:pitelemetry:pitemperature _read_device
+DEBUG:pitelemetry:Current temp = 17.1C
+DEBUG:pitelemetry:Current time = 2020-05-18 12:45:36.458137
+DEBUG:pitelemetry:jsonified data = {"nValue": 0, "sValue": 17.1, "sType": 9}
+DEBUG:pitelemetry:Published {"nValue": 0, "sValue": 17.1, "sType": 9} to tel/19c/shed/temp
+DEBUG:pitelemetry:pitemperature _read_device
+DEBUG:pitelemetry:Current temp = 17.1C
+DEBUG:pitelemetry:Current time = 2020-05-18 12:45:47.338190
+DEBUG:pitelemetry:jsonified data = {"nValue": 0, "sValue": 17.1, "sType": 9}
+DEBUG:pitelemetry:Published {"nValue": 0, "sValue": 17.1, "sType": 9} to tel/19c/shed/temp
+DEBUG:pitelemetry:pitemperature _read_device
+DEBUG:pitelemetry:Current temp = 17.1C
+DEBUG:pitelemetry:Current time = 2020-05-18 12:45:58.218245
+DEBUG:pitelemetry:jsonified data = {"nValue": 0, "sValue": 17.1, "sType": 9}
+DEBUG:pitelemetry:Published {"nValue": 0, "sValue": 17.1, "sType": 9} to tel/19c/shed/temp
+DEBUG:pitelemetry:pitemperature _read_device
+DEBUG:pitelemetry:Current temp = 17.1C
+DEBUG:pitelemetry:Current time = 2020-05-18 12:46:09.098192
+DEBUG:pitelemetry:jsonified data = {"nValue": 0, "sValue": 17.1, "sType": 9}
+DEBUG:pitelemetry:Published {"nValue": 0, "sValue": 17.1, "sType": 9} to tel/19c/shed/temp
+DEBUG:pitelemetry:pitemperature _read_device
+DEBUG:pitelemetry:Current temp = 17.1C
+DEBUG:pitelemetry:Current time = 2020-05-18 12:46:19.978224
+DEBUG:pitelemetry:jsonified data = {"nValue": 0, "sValue": 17.1, "sType": 9}
+DEBUG:pitelemetry:Published {"nValue": 0, "sValue": 17.1, "sType": 9} to tel/19c/shed/temp
+DEBUG:pitelemetry:pitemperature _read_device
+DEBUG:pitelemetry:Current temp = 17.1C
+DEBUG:pitelemetry:Current time = 2020-05-18 12:46:30.858246
+DEBUG:pitelemetry:jsonified data = {"nValue": 0, "sValue": 17.1, "sType": 9}
+DEBUG:pitelemetry:Published {"nValue": 0, "sValue": 17.1, "sType": 9} to tel/19c/shed/temp
+DEBUG:pitelemetry:pitemperature _read_device
+DEBUG:pitelemetry:Current temp = 17.1C
+DEBUG:pitelemetry:Current time = 2020-05-18 12:46:41.738227
+DEBUG:pitelemetry:jsonified data = {"nValue": 0, "sValue": 17.1, "sType": 9}
+DEBUG:pitelemetry:Published {"nValue": 0, "sValue": 17.1, "sType": 9} to tel/19c/shed/temp
+DEBUG:pitelemetry:pitemperature _read_device
+DEBUG:pitelemetry:Current temp = 17.1C
+DEBUG:pitelemetry:Current time = 2020-05-18 12:46:52.617891
+DEBUG:pitelemetry:jsonified data = {"nValue": 0, "sValue": 17.1, "sType": 9}
+DEBUG:pitelemetry:Published {"nValue": 0, "sValue": 17.1, "sType": 9} to tel/19c/shed/temp
+DEBUG:pitelemetry:pitemperature _read_device
+DEBUG:pitelemetry:Current temp = 17.1C
+DEBUG:pitelemetry:Current time = 2020-05-18 12:47:03.497924
+DEBUG:pitelemetry:jsonified data = {"nValue": 0, "sValue": 17.1, "sType": 9}
+DEBUG:pitelemetry:Published {"nValue": 0, "sValue": 17.1, "sType": 9} to tel/19c/shed/temp
+DEBUG:pitelemetry:pitemperature _read_device
+DEBUG:pitelemetry:Current temp = 17.1C
+DEBUG:pitelemetry:Current time = 2020-05-18 12:47:14.377928
+DEBUG:pitelemetry:jsonified data = {"nValue": 0, "sValue": 17.1, "sType": 9}
+DEBUG:pitelemetry:Published {"nValue": 0, "sValue": 17.1, "sType": 9} to tel/19c/shed/temp
+DEBUG:pitelemetry:pitemperature _read_device
+DEBUG:pitelemetry:Current temp = 17.2C
+DEBUG:pitelemetry:Current time = 2020-05-18 12:47:25.257900
+DEBUG:pitelemetry:jsonified data = {"nValue": 0, "sValue": 17.2, "sType": 9}
+DEBUG:pitelemetry:Published {"nValue": 0, "sValue": 17.2, "sType": 9} to tel/19c/shed/temp
+DEBUG:pitelemetry:pitemperature _read_device
+DEBUG:pitelemetry:Current temp = 17.2C
+DEBUG:pitelemetry:Current time = 2020-05-18 12:47:36.138054
+DEBUG:pitelemetry:jsonified data = {"nValue": 0, "sValue": 17.2, "sType": 9}
+DEBUG:pitelemetry:Published {"nValue": 0, "sValue": 17.2, "sType": 9} to tel/19c/shed/temp
+DEBUG:pitelemetry:pitemperature _read_device
+DEBUG:pitelemetry:Current temp = 17.2C
+DEBUG:pitelemetry:Current time = 2020-05-18 12:47:47.017959
+DEBUG:pitelemetry:jsonified data = {"nValue": 0, "sValue": 17.2, "sType": 9}
+DEBUG:pitelemetry:Published {"nValue": 0, "sValue": 17.2, "sType": 9} to tel/19c/shed/temp
+DEBUG:pitelemetry:pitemperature _read_device
+DEBUG:pitelemetry:Current temp = 17.2C
+DEBUG:pitelemetry:Current time = 2020-05-18 12:47:57.898005
+DEBUG:pitelemetry:jsonified data = {"nValue": 0, "sValue": 17.2, "sType": 9}
+DEBUG:pitelemetry:Published {"nValue": 0, "sValue": 17.2, "sType": 9} to tel/19c/shed/temp
+DEBUG:pitelemetry:pitemperature _read_device
+DEBUG:pitelemetry:Current temp = 17.2C
+DEBUG:pitelemetry:Current time = 2020-05-18 12:48:08.777978
+DEBUG:pitelemetry:jsonified data = {"nValue": 0, "sValue": 17.2, "sType": 9}
+DEBUG:pitelemetry:Published {"nValue": 0, "sValue": 17.2, "sType": 9} to tel/19c/shed/temp
+DEBUG:pitelemetry:pitemperature _read_device
+DEBUG:pitelemetry:Current temp = 17.2C
+DEBUG:pitelemetry:Current time = 2020-05-18 12:48:19.657985
+DEBUG:pitelemetry:jsonified data = {"nValue": 0, "sValue": 17.2, "sType": 9}
+DEBUG:pitelemetry:Published {"nValue": 0, "sValue": 17.2, "sType": 9} to tel/19c/shed/temp
+DEBUG:pitelemetry:pitemperature _read_device
+DEBUG:pitelemetry:Current temp = 17.2C
+DEBUG:pitelemetry:Current time = 2020-05-18 12:48:30.537961
+DEBUG:pitelemetry:jsonified data = {"nValue": 0, "sValue": 17.2, "sType": 9}
+DEBUG:pitelemetry:Published {"nValue": 0, "sValue": 17.2, "sType": 9} to tel/19c/shed/temp
+DEBUG:pitelemetry:pitemperature _read_device
+DEBUG:pitelemetry:Current temp = 17.2C
+DEBUG:pitelemetry:Current time = 2020-05-18 12:48:41.417984
+DEBUG:pitelemetry:jsonified data = {"nValue": 0, "sValue": 17.2, "sType": 9}
+DEBUG:pitelemetry:Published {"nValue": 0, "sValue": 17.2, "sType": 9} to tel/19c/shed/temp
+DEBUG:pitelemetry:pitemperature _read_device
+DEBUG:pitelemetry:Current temp = 17.2C
+DEBUG:pitelemetry:Current time = 2020-05-18 12:48:52.298337
+DEBUG:pitelemetry:jsonified data = {"nValue": 0, "sValue": 17.2, "sType": 9}
+DEBUG:pitelemetry:Published {"nValue": 0, "sValue": 17.2, "sType": 9} to tel/19c/shed/temp
+DEBUG:pitelemetry:pitemperature _read_device
+DEBUG:pitelemetry:Current temp = 17.2C
+DEBUG:pitelemetry:Current time = 2020-05-18 12:49:03.178254
+DEBUG:pitelemetry:jsonified data = {"nValue": 0, "sValue": 17.2, "sType": 9}
+DEBUG:pitelemetry:Published {"nValue": 0, "sValue": 17.2, "sType": 9} to tel/19c/shed/temp
+DEBUG:pitelemetry:pitemperature _read_device
+DEBUG:pitelemetry:Current temp = 17.2C
+DEBUG:pitelemetry:Current time = 2020-05-18 12:49:14.058232
+DEBUG:pitelemetry:jsonified data = {"nValue": 0, "sValue": 17.2, "sType": 9}
+DEBUG:pitelemetry:Published {"nValue": 0, "sValue": 17.2, "sType": 9} to tel/19c/shed/temp
+DEBUG:pitelemetry:pitemperature _read_device
+DEBUG:pitelemetry:Current temp = 17.2C
+DEBUG:pitelemetry:Current time = 2020-05-18 12:49:24.938131
+DEBUG:pitelemetry:jsonified data = {"nValue": 0, "sValue": 17.2, "sType": 9}
+DEBUG:pitelemetry:Published {"nValue": 0, "sValue": 17.2, "sType": 9} to tel/19c/shed/temp
+DEBUG:pitelemetry:pitemperature _read_device
+DEBUG:pitelemetry:Current temp = 17.2C
+DEBUG:pitelemetry:Current time = 2020-05-18 12:49:35.818141
+DEBUG:pitelemetry:jsonified data = {"nValue": 0, "sValue": 17.2, "sType": 9}
+DEBUG:pitelemetry:Published {"nValue": 0, "sValue": 17.2, "sType": 9} to tel/19c/shed/temp
+DEBUG:pitelemetry:pitemperature _read_device
+DEBUG:pitelemetry:Current temp = 17.2C
+DEBUG:pitelemetry:Current time = 2020-05-18 12:49:46.698122
+DEBUG:pitelemetry:jsonified data = {"nValue": 0, "sValue": 17.2, "sType": 9}
+DEBUG:pitelemetry:Published {"nValue": 0, "sValue": 17.2, "sType": 9} to tel/19c/shed/temp
+DEBUG:pitelemetry:pitemperature _read_device
+DEBUG:pitelemetry:Current temp = 17.2C
+DEBUG:pitelemetry:Current time = 2020-05-18 12:49:57.578082
+DEBUG:pitelemetry:jsonified data = {"nValue": 0, "sValue": 17.2, "sType": 9}
+DEBUG:pitelemetry:Published {"nValue": 0, "sValue": 17.2, "sType": 9} to tel/19c/shed/temp
+DEBUG:pitelemetry:pitemperature _read_device
+DEBUG:pitelemetry:Current temp = 17.2C
+DEBUG:pitelemetry:Current time = 2020-05-18 12:50:08.458146
+DEBUG:pitelemetry:jsonified data = {"nValue": 0, "sValue": 17.2, "sType": 9}
+DEBUG:pitelemetry:Published {"nValue": 0, "sValue": 17.2, "sType": 9} to tel/19c/shed/temp
+DEBUG:pitelemetry:pitemperature _read_device
+DEBUG:pitelemetry:Current temp = 17.2C
+DEBUG:pitelemetry:Current time = 2020-05-18 12:50:19.338228
+DEBUG:pitelemetry:jsonified data = {"nValue": 0, "sValue": 17.2, "sType": 9}
+DEBUG:pitelemetry:Published {"nValue": 0, "sValue": 17.2, "sType": 9} to tel/19c/shed/temp
+DEBUG:pitelemetry:pitemperature _read_device
+DEBUG:pitelemetry:Current temp = 17.2C
+DEBUG:pitelemetry:Current time = 2020-05-18 12:50:30.218213
+DEBUG:pitelemetry:jsonified data = {"nValue": 0, "sValue": 17.2, "sType": 9}
+DEBUG:pitelemetry:Published {"nValue": 0, "sValue": 17.2, "sType": 9} to tel/19c/shed/temp
+DEBUG:pitelemetry:pitemperature _read_device
+DEBUG:pitelemetry:Current temp = 17.2C
+DEBUG:pitelemetry:Current time = 2020-05-18 12:50:41.098246
+DEBUG:pitelemetry:jsonified data = {"nValue": 0, "sValue": 17.2, "sType": 9}
+DEBUG:pitelemetry:Published {"nValue": 0, "sValue": 17.2, "sType": 9} to tel/19c/shed/temp
+DEBUG:pitelemetry:pitemperature _read_device
+DEBUG:pitelemetry:Current temp = 17.2C
+DEBUG:pitelemetry:Current time = 2020-05-18 12:50:51.978145
+DEBUG:pitelemetry:jsonified data = {"nValue": 0, "sValue": 17.2, "sType": 9}
+DEBUG:pitelemetry:Published {"nValue": 0, "sValue": 17.2, "sType": 9} to tel/19c/shed/temp
+DEBUG:pitelemetry:pitemperature _read_device
+DEBUG:pitelemetry:Current temp = 17.2C
+DEBUG:pitelemetry:Current time = 2020-05-18 12:51:02.858171
+DEBUG:pitelemetry:jsonified data = {"nValue": 0, "sValue": 17.2, "sType": 9}
+DEBUG:pitelemetry:Published {"nValue": 0, "sValue": 17.2, "sType": 9} to tel/19c/shed/temp
+DEBUG:pitelemetry:pitemperature _read_device
+DEBUG:pitelemetry:Current temp = 17.2C
+DEBUG:pitelemetry:Current time = 2020-05-18 12:51:13.738247
+DEBUG:pitelemetry:jsonified data = {"nValue": 0, "sValue": 17.2, "sType": 9}
+DEBUG:pitelemetry:Published {"nValue": 0, "sValue": 17.2, "sType": 9} to tel/19c/shed/temp
+DEBUG:pitelemetry:pitemperature _read_device
+DEBUG:pitelemetry:Current temp = 17.2C
+DEBUG:pitelemetry:Current time = 2020-05-18 12:51:24.618153
+DEBUG:pitelemetry:jsonified data = {"nValue": 0, "sValue": 17.2, "sType": 9}
+DEBUG:pitelemetry:Published {"nValue": 0, "sValue": 17.2, "sType": 9} to tel/19c/shed/temp
+DEBUG:pitelemetry:pitemperature _read_device
+DEBUG:pitelemetry:Current temp = 17.2C
+DEBUG:pitelemetry:Current time = 2020-05-18 12:51:35.498099
+DEBUG:pitelemetry:jsonified data = {"nValue": 0, "sValue": 17.2, "sType": 9}
+DEBUG:pitelemetry:Published {"nValue": 0, "sValue": 17.2, "sType": 9} to tel/19c/shed/temp
+DEBUG:pitelemetry:pitemperature _read_device
+DEBUG:pitelemetry:Current temp = 17.2C
+DEBUG:pitelemetry:Current time = 2020-05-18 12:51:46.378202
+DEBUG:pitelemetry:jsonified data = {"nValue": 0, "sValue": 17.2, "sType": 9}
+DEBUG:pitelemetry:Published {"nValue": 0, "sValue": 17.2, "sType": 9} to tel/19c/shed/temp
+DEBUG:pitelemetry:pitemperature _read_device
+DEBUG:pitelemetry:Current temp = 17.2C
+DEBUG:pitelemetry:Current time = 2020-05-18 12:51:57.258176
+DEBUG:pitelemetry:jsonified data = {"nValue": 0, "sValue": 17.2, "sType": 9}
+DEBUG:pitelemetry:Published {"nValue": 0, "sValue": 17.2, "sType": 9} to tel/19c/shed/temp
+DEBUG:pitelemetry:pitemperature _read_device
+DEBUG:pitelemetry:Current temp = 17.2C
+DEBUG:pitelemetry:Current time = 2020-05-18 12:52:08.138170
+DEBUG:pitelemetry:jsonified data = {"nValue": 0, "sValue": 17.2, "sType": 9}
+DEBUG:pitelemetry:Published {"nValue": 0, "sValue": 17.2, "sType": 9} to tel/19c/shed/temp
+DEBUG:pitelemetry:pitemperature _read_device
+DEBUG:pitelemetry:Current temp = 17.2C
+DEBUG:pitelemetry:Current time = 2020-05-18 12:52:19.018171
+DEBUG:pitelemetry:jsonified data = {"nValue": 0, "sValue": 17.2, "sType": 9}
+DEBUG:pitelemetry:Published {"nValue": 0, "sValue": 17.2, "sType": 9} to tel/19c/shed/temp
+DEBUG:pitelemetry:pitemperature _read_device
+DEBUG:pitelemetry:Current temp = 17.2C
+DEBUG:pitelemetry:Current time = 2020-05-18 12:52:29.898273
+DEBUG:pitelemetry:jsonified data = {"nValue": 0, "sValue": 17.2, "sType": 9}
+DEBUG:pitelemetry:Published {"nValue": 0, "sValue": 17.2, "sType": 9} to tel/19c/shed/temp
+DEBUG:pitelemetry:pitemperature _read_device
+DEBUG:pitelemetry:Current temp = 17.2C
+DEBUG:pitelemetry:Current time = 2020-05-18 12:52:40.778206
+DEBUG:pitelemetry:jsonified data = {"nValue": 0, "sValue": 17.2, "sType": 9}
+DEBUG:pitelemetry:Published {"nValue": 0, "sValue": 17.2, "sType": 9} to tel/19c/shed/temp
+DEBUG:pitelemetry:pitemperature _read_device
+DEBUG:pitelemetry:Current temp = 17.2C
+DEBUG:pitelemetry:Current time = 2020-05-18 12:52:51.658186
+DEBUG:pitelemetry:jsonified data = {"nValue": 0, "sValue": 17.2, "sType": 9}
+DEBUG:pitelemetry:Published {"nValue": 0, "sValue": 17.2, "sType": 9} to tel/19c/shed/temp
+DEBUG:pitelemetry:pitemperature _read_device
+DEBUG:pitelemetry:Current temp = 17.2C
+DEBUG:pitelemetry:Current time = 2020-05-18 12:53:02.538169
+DEBUG:pitelemetry:jsonified data = {"nValue": 0, "sValue": 17.2, "sType": 9}
+DEBUG:pitelemetry:Published {"nValue": 0, "sValue": 17.2, "sType": 9} to tel/19c/shed/temp
+DEBUG:pitelemetry:pitemperature _read_device
+DEBUG:pitelemetry:Current temp = 17.2C
+DEBUG:pitelemetry:Current time = 2020-05-18 12:53:13.418128
+DEBUG:pitelemetry:jsonified data = {"nValue": 0, "sValue": 17.2, "sType": 9}
+DEBUG:pitelemetry:Published {"nValue": 0, "sValue": 17.2, "sType": 9} to tel/19c/shed/temp
+DEBUG:pitelemetry:pitemperature _read_device
+DEBUG:pitelemetry:Current temp = 17.2C
+DEBUG:pitelemetry:Current time = 2020-05-18 12:53:24.298263
+DEBUG:pitelemetry:jsonified data = {"nValue": 0, "sValue": 17.2, "sType": 9}
+DEBUG:pitelemetry:Published {"nValue": 0, "sValue": 17.2, "sType": 9} to tel/19c/shed/temp
+DEBUG:pitelemetry:pitemperature _read_device
+DEBUG:pitelemetry:Current temp = 17.2C
+DEBUG:pitelemetry:Current time = 2020-05-18 12:53:35.258258
+DEBUG:pitelemetry:jsonified data = {"nValue": 0, "sValue": 17.2, "sType": 9}
+DEBUG:pitelemetry:Published {"nValue": 0, "sValue": 17.2, "sType": 9} to tel/19c/shed/temp
+DEBUG:pitelemetry:pitemperature _read_device
+DEBUG:pitelemetry:Current temp = 17.2C
+DEBUG:pitelemetry:Current time = 2020-05-18 12:53:46.138225
+DEBUG:pitelemetry:jsonified data = {"nValue": 0, "sValue": 17.2, "sType": 9}
+DEBUG:pitelemetry:Published {"nValue": 0, "sValue": 17.2, "sType": 9} to tel/19c/shed/temp
+DEBUG:pitelemetry:pitemperature _read_device
+DEBUG:pitelemetry:Current temp = 17.2C
+DEBUG:pitelemetry:Current time = 2020-05-18 12:53:57.018191
+DEBUG:pitelemetry:jsonified data = {"nValue": 0, "sValue": 17.2, "sType": 9}
+DEBUG:pitelemetry:Published {"nValue": 0, "sValue": 17.2, "sType": 9} to tel/19c/shed/temp
+DEBUG:pitelemetry:pitemperature _read_device
+DEBUG:pitelemetry:Current temp = 17.2C
+DEBUG:pitelemetry:Current time = 2020-05-18 12:54:07.898160
+DEBUG:pitelemetry:jsonified data = {"nValue": 0, "sValue": 17.2, "sType": 9}
+DEBUG:pitelemetry:Published {"nValue": 0, "sValue": 17.2, "sType": 9} to tel/19c/shed/temp
+INFO:pitelemetry:pitelemetry started
+DEBUG:pitelemetry:telemetryFactory __init__
+DEBUG:pitelemetry:telemetryFactory create
+DEBUG:pitelemetry:pitelemetry __init__
+DEBUG:pitelemetry:pitelemetry run
+DEBUG:pitelemetry:Thread shed_temp created and started
+DEBUG:pitelemetry:pitelemetry.pitelemetry is running

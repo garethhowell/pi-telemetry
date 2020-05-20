@@ -56,8 +56,7 @@ setup(
         'RPi.GPIO',
         'keyboard',
         'PyYAML',
-        'requests',
-        'json'
+        'requests'
         ],
     data_files = [
 	    ('/etc', ['etc/pitelemetry.yaml', 'etc/pitelemetry_logging.yaml']),

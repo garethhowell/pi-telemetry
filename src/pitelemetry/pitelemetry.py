@@ -28,7 +28,7 @@ class PiTelemetry(Thread):
     def __init__(self, broker, sensor, shutdown):
         ''' Constructor. '''
         Thread.__init__(self)
-        self.log=logging.getLogger("pitelemetry")
+        self.log=logging.getLogger(__name__)
         self.log.debug('pitelemetry __init__')
 
         # unpack the config
@@ -41,7 +41,6 @@ class PiTelemetry(Thread):
 
     def _read_device(self,device):
         raise NotImplementedError("_read_device is implemented in the sub-classes")
-
 
     def connected(client, userdata, flags, rc):
         """Callback function for when the client receives a CONNACK response from the broker """
@@ -78,6 +77,7 @@ class PiTelemetry(Thread):
         device = baseDir + w1Device + '/w1_slave'
 
         # Create an MQTT client instance
+        # client = MQTTClient(mqttUser, mqttPassword, mqttBroker, False) # Use insecure connection to this internal broker
         client = MQTTClient(mqttUser, mqttPassword, mqttBroker, False) # Use insecure connection to this internal broker
 
         # Setup the callbacks
