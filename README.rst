@@ -1,7 +1,7 @@
 pitelemetry
 ============
 
-Collect data from 1-wire sensors connected to Raspberry Pi and send via mqtt
+Collect data from 1-wire sensors connected to a Raspberry Pi and send via mqtt
 
 It takes one argument - the yaml file that contains the configuration.
 The default configuration file is `/etc/pitelemetry.yaml`
@@ -27,13 +27,13 @@ An example configuration is: ::
  
 
 RESTRICTIONS
-============
+------------
 
 Currently only supports DS18B120 temperature sensors,
 but is easily extended to support other types.
 
 INSTALLATION
-============
+------------
 
 Execute the following from a terminal ::
 
@@ -47,7 +47,7 @@ pitelemetry currently supports the following sensors:
 * DS18B120 temperature sensor
 
 ADDING NEW SENSOR TYPES
-=======================
+-----------------------
 
 To add a new sensor type:
 
@@ -56,6 +56,6 @@ To add a new sensor type:
 * Add the new sensor to the `sensorTypes` list in `bin/pitelemetry`
 
 TODO
-====
+----
 
 Add other 1-wire sensors
