@@ -4,9 +4,9 @@ pitelemetry
 Collect data from 1-wire sensors connected to a Raspberry Pi and send via mqtt
 
 It takes one argument - the yaml file that contains the configuration.
-The default configuration file is `/etc/pitelemetry.yaml`
+The default configuration file is '/etc/pitelemetry.yaml'
 
-An example configuration is: ::
+An example configuration is ::
 
  broker:
     mqtt_client: mynode
@@ -24,7 +24,7 @@ An example configuration is: ::
       type: temperature
       device: 28-0417c15cf333
       topic: tel/foo/ext/temp
- 
+
 
 RESTRICTIONS
 ------------
