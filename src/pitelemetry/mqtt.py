@@ -48,6 +48,10 @@ class MQTTClient(object):
             :param secure: (optional, boolean) Switches secure/insecure connections
         """
         self.logger = logging.getLogger("__name__")
+        if username == "" or key == "" or service_host == "":
+            self.logger.error("Failed to supply valid parameters")
+            raise TypeError
+
         self._username = username
         self._service_host = service_host
         if secure:
