@@ -111,8 +111,8 @@ def main(argv):
             log.debug('Creating new thread of class %s to deal with sensor: %s', sensor_type, new_sensor)
             threads[i] = telemetry_obj.create(sensor_type, broker, discovery_prefix, new_sensor, shutdown)
             threads[i].setName(new_sensor['name'])
-            #threads[i].setDaemon(True)
-            #threads[i].start()
+            threads[i].setDaemon(True)
+            threads[i].start()
             log.debug("Thread %s created and started", new_sensor['name'])
         i += 1
 
