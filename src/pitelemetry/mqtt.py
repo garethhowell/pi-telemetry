@@ -47,7 +47,8 @@ class MQTTClient(object):
             :param service_host: address of broker
             :param secure: (optional, boolean) Switches secure/insecure connections
         """
-        self.logger = logging.getLogger("__name__")
+        self.logger = logging.getLogger("pitelemetry.mqtt")
+        self.logger.debug('username = %s, key = %s, service_host = %s', username, key, service_host)
         if username == "" or key == "" or service_host == "":
             self.logger.error("Failed to supply valid parameters")
             raise TypeError
