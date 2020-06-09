@@ -1,4 +1,7 @@
+# Ignored files
+etc/pitelemetry.yaml
 telemetry
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
