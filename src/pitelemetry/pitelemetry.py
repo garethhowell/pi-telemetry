@@ -89,7 +89,6 @@ class PiTelemetry(Thread):
         sensor = base_dir + w1_device + '/w1_slave'
 
         # Create an MQTT client instance
-        # client = MQTTClient(mqttUser, mqttPassword, mqttBroker, False) # Use insecure connection to this internal broker
         client = MQTTClient(mqtt_user, mqtt_password, mqtt_broker, False) # Use insecure connection to this internal broker
 
         # Setup the callbacks
@@ -105,8 +104,8 @@ class PiTelemetry(Thread):
             client.loop_background()
 
             # Register the sensor with Home Assistant (if used)
-            if not self.discovery_prefix == "":
-                self.log.debug("registering sensor with Home Assistant. sensor: %s, registration topic: %s, value: %s", sensor, topic, sensor_string)
+            #if not self.discovery_prefix == "":
+            #    self.log.debug("registering sensor with Home Assistant. sensor: %s, registration topic: %s, value: %s", sensor, topic, sensor_string)
 
             # Start reading device data and publishing to broker
             while True:
