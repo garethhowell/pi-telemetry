@@ -28,7 +28,6 @@ class PiTemperature(PiTelemetry):
 
 
     def _read_sensor(self, sensor):
-        self.log=loggin.getLogger(__name)
         self.log.debug("pitemperature _read_sensor")
         try:
             lines = self._read_temp_raw(sensor)
