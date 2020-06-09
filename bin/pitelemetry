@@ -16,6 +16,7 @@ import threading
 import signal
 import keyboard, termios, tty
 
+# Change this to add more sensor types
 sensor_types = {'temperature': 'PiTemperature', 'humidity': 'PiHumidity'}
 log = ""
 
@@ -59,7 +60,7 @@ def main(argv):
         raise ValueError('Invalid logging level: %s', loglevel)
 
     # Create Logger object
-    log = logging.getLogger(__name__)
+    log = logging.getLogger("pitelemetry")
     log.setLevel(logging_level)
     fh = logging.FileHandler('pitelemetry.log')
     ch = logging.StreamHandler()
@@ -67,7 +68,7 @@ def main(argv):
     formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
     fh.setFormatter(formatter)
     ch.setFormatter(formatter)
-    log.addHandler(fh)
+    #log.addHandler(fh)
     log.addHandler(ch)
 
     log.info("pitelemetry started")
@@ -81,6 +82,7 @@ def main(argv):
             exit(1)
 
     # Make sure we have the right sensor modules installed
+    # Change this to add more sensor types
     os.system('modprobe w1-gpio')
     os.system('modprobe w1-therm')
 
