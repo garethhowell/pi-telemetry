@@ -10,7 +10,7 @@ discovery_prefix: "home-assistant"
 
 sensors:
   - sensor:
-    name: shed_temp
-    type: temperature
-    device: 28-0417c15da2ff
-    state_topic: tel/19c/shed/temp
+      name: shed_temp
+      type: temperature
+      device: 28-0417c15da2ff
+      state_topic: tel/19c/shed/temp

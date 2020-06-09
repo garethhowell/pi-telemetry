@@ -6,9 +6,10 @@ class TelemetryFactory():
 
     def __init__(self):
 
-        self.log = logging.getLogger('pitelemetry')
-        self.log.debug("telemetryFactory __init__")
+        log = logging.getLogger('__name__')
+        log.debug("telemetryFactory __init__")
 
-    def create(self, typ, broker, sensor, shutdown):
-        self.log.debug("telemetryFactory create")
-        return globals()[typ](broker, sensor, shutdown)
+    def create(self, typ, broker, discovery_prefix, sensor, shutdown):
+        log = logging.getLogger('__name__')
+        log.debug("telemetryFactory create")
+        return globals()[typ](broker, discovery_prefix, sensor, shutdown)

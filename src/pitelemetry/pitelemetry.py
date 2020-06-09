@@ -26,10 +26,17 @@ class PiTelemetry(Thread):
     log = None
 
     def __init__(self, broker, discovery_prefix, sensor, shutdown):
-        ''' Constructor. '''
-        Thread.__init__(self)
+        ''' 
+        Constructor.
+            :param broker: the address of the MQTT broker
+            :param discovery_prefix: the prefix that Home Assistant will look for during MQTT Discovery
+            :param sensor: yaml dictionary describing the 1-wire device we are addressing
+            :param shutdown: the event used to end the thread
+        '''
         self.log=logging.getLogger(__name__)
         self.log.debug('pitelemetry __init__')
+        Thread.__init__(self)
+        self.log.debug('broker = %s, discovery_prefix = %s, sensor = %s', broker, discovery_prefix, sensor)
 
         # unpack the config
         self.broker = broker
@@ -42,6 +49,7 @@ class PiTelemetry(Thread):
 
     def _register_device(self, sensor):
         """Register the sensor with Home Assistant"""
+        self.log=logging.getLogger(__name__)
         self.log.debug("Registering sensor with Home Assistant. sensor: %s", sensor)
 
     def _read_sensor(self, sensor):
@@ -49,20 +57,24 @@ class PiTelemetry(Thread):
 
     def connected(client, userdata, flags, rc):
         """Callback function for when the client receives a CONNACK response from the broker """
+        self.log=logging.getLogger(__name__)
         self.log.debug("%s connected with result code %s", client, str(rc))
         self.connected = True
 
     def disconnected(client):
         """Callback function for when client disconnects from broker"""
+        self.log=logging.getLogger(__name__)
         self.log.debug("Client disconnected from broker! Exiting")
         sys.exit(1)
 
     def message(client, userdata, msg):
         """Callback function for when the client receives a message from the broker"""
+        self.log=logging.getLogger(__name__)
         self.log.debug("Message received from broker. topic: %s, message: %s", msg.topic, str(msg.payload))
 
     def run(self):
         """Connect to the broker, register the sensor and start reporting"""
+        self.log=logging.getLogger(__name__)
         self.log.debug("pitelemetry run")
         self.log.debug("%s is running", __name__)
 

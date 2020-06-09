@@ -59,10 +59,17 @@ def main(argv):
         raise ValueError('Invalid logging level: %s', loglevel)
 
     # Create Logger object
-    logging.basicConfig(level=logging_level)
-
-    # Open this module's logger
     log = logging.getLogger(__name__)
+    log.setLevel(logging_level)
+    fh = logging.FileHandler('pitelemetry.log')
+    ch = logging.StreamHandler()
+
+    formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
+    fh.setFormatter(formatter)
+    ch.setFormatter(formatter)
+    log.addHandler(fh)
+    log.addHandler(ch)
+
     log.info("pitelemetry started")
 
     # Get telemetry configuration
@@ -87,6 +94,7 @@ def main(argv):
     # Parse the config
     broker = config['broker']
     sensors = config['sensors']
+    log.debug("sensors = %s", sensors)
     discovery_prefix = config['discovery_prefix']
     threads = {}
     telemetry_obj = TelemetryFactory()
@@ -94,15 +102,18 @@ def main(argv):
     i =0
     # Instantiate a thread for each sensor
     for sensor_inst in sensors:
+        log.debug("sensor_inst = %s", sensor_inst)
         # Check we have a real sensor
         if not (sensor_inst['sensor'] is None):
             new_sensor = sensor_inst['sensor']
-        sensor_type = sensor_types[new_sensor['type']]
-        threads[i] = telemetry_obj.create(sensor_type, broker, discovery_prefix, new_sensor, shutdown)
-        threads[i].setName(new_sensor['name'])
-        threads[i].setDaemon(True)
-        threads[i].start()
-        log.debug("Thread %s created and started",sensor['name'])
+            log.debug("new_sensor = %s", new_sensor)
+            sensor_type = sensor_types[new_sensor['type']]
+            log.debug('Creating new thread of class %s to deal with sensor: %s', sensor_type, new_sensor)
+            threads[i] = telemetry_obj.create(sensor_type, broker, discovery_prefix, new_sensor, shutdown)
+            threads[i].setName(new_sensor['name'])
+            #threads[i].setDaemon(True)
+            #threads[i].start()
+            log.debug("Thread %s created and started", new_sensor['name'])
         i += 1
 
     while not shutdown.isSet():
