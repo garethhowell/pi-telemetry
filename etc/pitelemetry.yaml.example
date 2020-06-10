@@ -1,13 +1,22 @@
 broker:
-  mqtt_client: dellups
-  mqtt_broker: mqtt.agdon.net
-  mqtt_user: ""
-  mqtt_password: ""
+  mqtt_client: client_name
+  mqtt_broker: broker
+  mqtt_user: user
+  mqtt_password: password
   update_interval: 60 # seconds
-log_level: debug
+log_level: INFO
+
+discovery_prefix: "prefix"
+
 sensors:
   - sensor:
-    name: shed_temp
-    type: temperature
-    device: 28-0417c15da2ff
-    topic: tel/19c/shed/temp
+      name: shed_temp
+      type: temperature
+      device: 28-0417c15da2ff
+      state_topic: tel/19c/shed/temp
+  - sensor:
+      name: ext_temp
+      type: temperature
+      device: 28-0417c15dc2ad
+      state_topic: tel/19c/ext/temp
+
