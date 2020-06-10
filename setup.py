@@ -60,6 +60,6 @@ setup(
         ('/etc/systemd/system', ['etc/systemd/pitelemetry.service'])
 	],
     scripts = [
-        'src/pitelemetry/pitelemetry'
+        'src/pitelemetry.py'
     ]
 )

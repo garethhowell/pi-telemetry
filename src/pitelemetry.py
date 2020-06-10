@@ -109,7 +109,7 @@ def main(argv):
     for sensor_inst in sensors:
         log.debug("sensor_inst = %s", sensor_inst)
         # Check we have a real sensor
-        if not (sensor_inst['sensor'] is None)
+        if not (sensor_inst['sensor'] is None):
 
             # get the sensor dictionary
             new_sensor = sensor_inst['sensor']
