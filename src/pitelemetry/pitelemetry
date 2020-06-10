@@ -3,9 +3,12 @@
 Main script for the PiTelemetry module.
 Contains utility functions and main invocation code
 Designed to be invoked from command line or from systemd
+    :param -c --configfile: YAML configuration file (default: /etc/pitelemetry.yaml)
+    :param -l --loglevel: logging level (default: INFO)
 """
 
 import sys
+# Change this to add more sensor types
 from pitelemetry import TelemetryFactory, PiTemperature
 from time import sleep
 import argparse
@@ -93,7 +96,7 @@ def main(argv):
     #Catch SIGTERM
     signal.signal(signal.SIGTERM, sigcatch)
 
-    # Parse the config
+    # Parse the YAML config
     broker = config['broker']
     sensors = config['sensors']
     log.debug("sensors = %s", sensors)
@@ -106,23 +109,33 @@ def main(argv):
     for sensor_inst in sensors:
         log.debug("sensor_inst = %s", sensor_inst)
         # Check we have a real sensor
-        if not (sensor_inst['sensor'] is None):
+        if not (sensor_inst['sensor'] is None)
+
+            # get the sensor dictionary
             new_sensor = sensor_inst['sensor']
             log.debug("new_sensor = %s", new_sensor)
+
+            # get the type of sensor we are dealing with
             sensor_type = sensor_types[new_sensor['type']]
             log.debug('Creating new thread of class %s to deal with sensor: %s', sensor_type, new_sensor)
+
+            # start a new thread to handle the sensor. using sensor_type to decide which class to instantiate
             threads[i] = telemetry_obj.create(sensor_type, broker, discovery_prefix, new_sensor, shutdown)
             threads[i].setName(new_sensor['name'])
             threads[i].setDaemon(True)
             threads[i].start()
             log.debug("Thread %s created and started", new_sensor['name'])
+        # On to the next block
         i += 1
 
+    # Loop until we are signalled to shutdown
     while not shutdown.isSet():
         if sys.stdin.isatty():
             char = getchar()
             if char == "q":
                 log.debug("shut down signalled from keyboard")
+
+                # Signal the threads to shutdown
                 shutdown.set()
 
         sleep(1)
@@ -131,7 +144,8 @@ def main(argv):
     log.debug("Shutting down")
     for j in range(0,i-1):
         threads[j].join()
-    log.info("Shutdown")
+    log.info("PiTelemetry Shutdown")
 
+# Kick things off if we are invoked as a module `python -m pitelemetry`
 if __name__ == "__main__":
     main(sys.argv[1:])

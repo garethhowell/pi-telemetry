@@ -50,7 +50,7 @@ setup(
     include_package_data=True,
     install_requires= [
         'paho-mqtt>=1.5.0',
-        'RPi.GPIO>=0.7.0',
+#        'RPi.GPIO>=0.7.0',
         'keyboard',
         'PyYAML>=5.1.2',
         'requests'
@@ -60,6 +60,6 @@ setup(
         ('/etc/systemd/system', ['etc/systemd/pitelemetry.service'])
 	],
     scripts = [
-        'bin/pitelemetry'
+        'src/pitelemetry/pitelemetry'
     ]
 )

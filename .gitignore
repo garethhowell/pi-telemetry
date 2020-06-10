@@ -1,6 +1,6 @@
 # Ignored files
 etc/pitelemetry.yaml
-telemetry
+pytelemetry.log
 
 # Byte-compiled / optimized / DLL files
 __pycache__/

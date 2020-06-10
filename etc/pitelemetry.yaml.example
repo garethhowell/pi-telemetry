@@ -4,7 +4,6 @@ broker:
   mqtt_user: user
   mqtt_password: password
   update_interval: 60 # seconds
-log_level: INFO
 
 discovery_prefix: "prefix"
 
@@ -19,4 +18,3 @@ sensors:
       type: temperature
       device: 28-0417c15dc2ad
       state_topic: tel/19c/ext/temp
-
