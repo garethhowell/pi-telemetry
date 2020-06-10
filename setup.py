@@ -49,14 +49,14 @@ setup(
     package_dir={'': 'src'},
     include_package_data=True,
     install_requires= [
-        'paho-mqtt',
-        'RPi.GPIO',
+        'paho-mqtt>=1.5.0',
+        'RPi.GPIO>=0.7.0',
         'keyboard',
-        'PyYAML',
+        'PyYAML>=5.1.2',
         'requests'
         ],
     data_files = [
-	    ('/etc', ['etc/pitelemetry.yaml', 'etc/pitelemetry_logging.yaml']),
+	    ('/etc', ['etc/pitelemetry.yaml.example']),
         ('/etc/systemd/system', ['etc/systemd/pitelemetry.service'])
 	],
     scripts = [
