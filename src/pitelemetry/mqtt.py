@@ -270,19 +270,21 @@ class MQTTClient(object):
       (res, self._pub_mid) = self._client.publish('{0}/feeds/{1}/get'.format(self._username, feed_id),
           payload='')
 
-    def publish(self, feed_id, value=None, group_id=None, feed_user=None):
+    def publish(self, feed_id, value=None, qos=0, retain=False, group_id=None, feed_user=None):
         """Publish a value to a specified feed.
         Params:
         - feed_id: The id of the feed to update.
         - value: The new value to publish to the feed.
+        - (optional) qos: the Quality of Service to use (default=0)
+        - (optional) retain: Whether the retain flag should be set on the message (default=False)
         - (optional) group_id: The id of the group to update.
         - (optional) feed_user: The feed owner's username. Used for Sharing Feeds.
         """
         if feed_user is not None: # shared feed
           (res, self._pub_mid) = self._client.publish('{0}/feeds/{1}'.format(feed_user, feed_id),
-              payload=value)
+              payload=valuei, qos=qos, retain=retain)
         elif group_id is not None: # group-specified feed
           self._client.publish('{0}/feeds/{1}.{2}'.format(self._username, group_id, feed_id),
-              payload=value)
+              payload=value, qos=qos, retain=retain)
         else: # regular feed
-          (res, self._pub_mid) = self._client.publish(feed_id, payload=value)
+          (res, self._pub_mid) = self._client.publish(feed_id, payload=value, qos=qos, retain=retain)

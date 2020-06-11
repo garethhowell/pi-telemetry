@@ -100,7 +100,6 @@ def main(argv):
     broker = config['broker']
     sensors = config['sensors']
     log.debug("sensors = %s", sensors)
-    discovery_prefix = config['discovery_prefix']
     threads = {}
     telemetry_obj = TelemetryFactory()
 
@@ -120,7 +119,7 @@ def main(argv):
             log.debug('Creating new thread of class %s to deal with sensor: %s', sensor_type, new_sensor)
 
             # start a new thread to handle the sensor. using sensor_type to decide which class to instantiate
-            threads[i] = telemetry_obj.create(sensor_type, broker, discovery_prefix, new_sensor, shutdown)
+            threads[i] = telemetry_obj.create(sensor_type, broker, new_sensor, shutdown)
             threads[i].setName(new_sensor['name'])
             threads[i].setDaemon(True)
             threads[i].start()

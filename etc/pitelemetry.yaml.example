@@ -12,9 +12,13 @@ sensors:
       name: shed_temp
       type: temperature
       device: 28-0417c15da2ff
+      ha_device_class: temperature
+      config_topic: home-assistant/sensor/shed/shed_temperature/config
       state_topic: tel/19c/shed/temp
   - sensor:
       name: ext_temp
       type: temperature
       device: 28-0417c15dc2ad
+      ha_device_class: temperature
+      config_topic: home-assistant/sensor/ext/ext_temperature/config
       state_topic: tel/19c/ext/temp
