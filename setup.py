@@ -56,7 +56,7 @@ setup(
         'requests'
         ],
     data_files = [
-	    ('/etc', ['etc/pitelemetry.yaml', 'etc/pitelemetry_logging.yaml']),
+	    ('/etc', ['etc/pitelemetry.yaml.example']),
         ('/etc/systemd/system', ['etc/systemd/pitelemetry.service'])
 	],
     scripts = [
