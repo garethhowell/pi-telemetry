@@ -1,5 +1,6 @@
 import logging
 from .pitemperature import PiTemperature
+from .picpuload import PiCPULoad
 
 class TelemetryFactory():
     """ Factory class to create the appropriate telemetry object"""
