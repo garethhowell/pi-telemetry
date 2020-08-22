@@ -9,7 +9,7 @@ Designed to be invoked from command line or from systemd
 
 import sys
 # Change this to add more sensor types
-from pitelemetry import TelemetryFactory, PiTemperature
+from pitelemetry import TelemetryFactory, PiTemperature, PiCPULoad
 from time import sleep
 import argparse
 import logging, logging.config
@@ -20,7 +20,7 @@ import signal
 import keyboard, termios, tty
 
 # Change this to add more sensor types
-sensor_types = {'temperature': 'PiTemperature', 'humidity': 'PiHumidity'}
+sensor_types = {'temperature': 'PiTemperature', 'humidity': 'PiHumidity', 'cpuload': 'PiCPULoad'}
 log = ""
 
 def sigcatch(signum, frame):
