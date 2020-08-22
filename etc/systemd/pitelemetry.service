@@ -5,7 +5,7 @@ Documentation=https://www.github.com/garethhowell/pitelemetry
 [Service]
 Type=simple
 Restart=on-failure
-ExecStart=/usr/local/bin/pitelemetry /etc/pitelemetry.yaml
+ExecStart=/usr/local/bin/pitelemetry -c /etc/pitelemetry.yaml
 
 [Install]
 WantedBy=multi-user.target
