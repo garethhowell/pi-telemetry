@@ -1,5 +1,5 @@
 # __init__.py
-__version__ = "0.1.0.dev01"
+__version__ = "0.1.0.dev2"
 from .telemetryfactory import TelemetryFactory
 from .pitelemetry import PiTelemetry
 from .pitemperature import PiTemperature
