@@ -45,10 +45,6 @@ class PiTelemetry(Thread):
 
     # Private functions
 
-    def _register_sensor(self, sensor):
-        """Register the sensor with Home Assistant"""
-        self.log.debug("Registering sensor with Home Assistant. sensor: %s", sensor)
-
     def _read_sensor(self, sensor):
         raise NotImplementedError("_read_sensor is implemented in the sub-classes")
 
@@ -78,21 +74,6 @@ class PiTelemetry(Thread):
         mqtt_password = self.broker['mqtt_password']
         self.log.debug("mqtt_client = %s, mqtt_broker = %s, mqtt_user = %s", mqtt_client, mqtt_broker, mqtt_user)
 
-        # Setup the sensor attributes
-        name = self.sensor['name']
-        entity = self.sensor['entity']
-        device = self.sensor['device']
-        ha_device_class = self.sensor['ha_device_class']
-        config_topic = self.sensor['config_topic']
-        state_topic = self.sensor['state_topic']
-        unit_of_measurement = self.sensor['unit_of_measurement']
-        value_template = self.sensor['value_template']
-        unique_id = self.sensor['name']
-        self.log.debug("name = %s, device = %s, ha_device_class = %s, config_topic = %s, state_topic = %s", \
-                name, device, ha_device_class, config_topic, state_topic) 
-        self.log.debug("unit_of_measurement=%s, value_template = %s, unique_id = %s, device = %s", \
-                unit_of_measurement, value_template, unique_id, device)
-
         # Make sure we access the right device
         base_dir = '/sys/bus/w1/devices/'
         w1sensor = base_dir + entity + '/w1_slave'
@@ -112,27 +93,8 @@ class PiTelemetry(Thread):
         #Set the client to loop in the background
         client.loop_background()
 
-        # Register the sensor with Home Assistant (if used)
-        if not config_topic  == "":
-            self.log.debug("registering sensor %s with Home Assistant using registration topic: %s", w1sensor, config_topic)
-                
-            # Construct the payload
-            config_payload = '{"name": "' + name + \
-                    '", "state_topic": "' + state_topic + \
-                    '", "device_class": "' + ha_device_class + \
-                    '", "unique_id": "' + name + \
-                    '", "unit_of_measurement": "' + unit_of_measurement + \
-                    '", "value_template": "' + value_template + '}'
-
-            print(config_payload)
-
-            self.log.debug("payload = %s", config_payload)
-                
-            # Send the registration message
-            client.publish(config_topic, config_payload, qos=0, retain=True)
-
         while not (self.shutdown.isSet()):
-        
+
             # Start reading device data and publishing to broker
             while True:
                 sensor_data = self._read_sensor(w1sensor)
